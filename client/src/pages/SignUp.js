@@ -1,10 +1,7 @@
 import React from 'react';
 import Avatar from '@material-ui/core/Avatar';
-import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import TextField from '@material-ui/core/TextField';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Checkbox from '@material-ui/core/Checkbox';
 import Link from '@material-ui/core/Link';
 import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box';
@@ -14,14 +11,15 @@ import { makeStyles, ThemeProvider } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 
 import theme from '../utils/themeUtil';
+import Button from '../components/common/Button/index'
 
 function Copyright() {
   return (
     <ThemeProvider theme={ theme }>
         <Typography variant="body2" color="textSecondary" align="center">
         {'Copyright © '}
-        <Link color="inherit" href="https://material-ui.com/">
-            Your Website
+        <Link color="inherit" href="http://etheron-rpg.herokuapp.com/">
+            Etheron RPG
         </Link>{' '}
         {new Date().getFullYear()}
         {'.'}
@@ -112,25 +110,19 @@ function SignUp() {
                     autoComplete="current-password"
                 />
                 </Grid>
-                <Grid item xs={12}>
-                <FormControlLabel
-                    control={<Checkbox value="allowExtraEmails" color="primary" />}
-                    label="I want to receive inspiration, marketing promotions and updates via email."
-                />
-                </Grid>
             </Grid>
             <Button
                 type="submit"
                 fullWidth
                 variant="contained"
-                color="primary"
+                color="secondary"
                 className={classes.submit}
             >
                 Sign Up
             </Button>
             <Grid container justify="flex-end">
                 <Grid item>
-                <Link href="#" variant="body2">
+                <Link href="/" variant="body2"> 
                     Already have an account? Sign in
                 </Link>
                 </Grid>
