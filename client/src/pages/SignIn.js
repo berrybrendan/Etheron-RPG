@@ -1,6 +1,5 @@
 import React from 'react';
 import Avatar from '@material-ui/core/Avatar';
-import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import TextField from '@material-ui/core/TextField';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
@@ -14,14 +13,15 @@ import Typography from '@material-ui/core/Typography';
 import { makeStyles, ThemeProvider } from '@material-ui/core/styles';
 
 import theme from '../utils/themeUtil';
+import Button from '../components/common/Button/index'
 
 function Copyright() {
   return (
     <ThemeProvider theme={ theme }>
         <Typography variant="body2" color="textSecondary" align="center">
         {'Copyright © '}
-        <Link color="inherit" href="https://material-ui.com/">
-            Your Website
+        <Link color="inherit" href="http://etheron-rpg.herokuapp.com/">
+            Etheron RPG
         </Link>{' '}
         {new Date().getFullYear()}
         {'.'}
@@ -66,7 +66,7 @@ function SignIn() {
 
   return (
     <ThemeProvider theme={ theme }>
-        <Grid container component="main" className={classes.root}>
+        <Grid container component="main" className={classes.root} >
         <CssBaseline />
         <Grid item xs={false} sm={4} md={7} className={classes.image} />
         <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
@@ -101,14 +101,14 @@ function SignIn() {
                 autoComplete="current-password"
                 />
                 <FormControlLabel
-                control={<Checkbox value="remember" color="primary" />}
+                control={<Checkbox value="remember" color="secondary" />}
                 label="Remember me"
                 />
                 <Button
                 type="submit"
                 fullWidth
                 variant="contained"
-                color="primary"
+                color="secondary"
                 className={classes.submit}
                 >
                 Sign In
@@ -120,7 +120,7 @@ function SignIn() {
                     </Link>
                 </Grid>
                 <Grid item>
-                    <Link href="#" variant="body2">
+                    <Link href="/signup" variant="body2">
                     {"Don't have an account? Sign Up"}
                     </Link>
                 </Grid>
