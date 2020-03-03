@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import { BrowserRouter as Router, Route, Switch, Redirect, useHistory } from "react-router-dom";
 import { ThemeProvider } from '@material-ui/core/styles'
 
 import theme from '../../utils/themeUtil';
@@ -34,6 +34,9 @@ function App() {
         <Switch>
           <Route exact path='/' component={() => <SignIn toggleAuthStatus={toggleAuthStatus} number="1"/>} ></Route>
           <Route exact path='/signup' component={SignUp}></Route>
+          {/* <Route exact path="/dashboard">
+            {authenticated ? <Redirect to="/dashboard" /> : <Redirect to="/" />}
+          </Route> */}
           <PrivateRoute exact path="/dashboard" component={Dashboard}/>
         </Switch>
       </ThemeProvider>

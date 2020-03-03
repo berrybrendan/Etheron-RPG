@@ -11,6 +11,7 @@ import Grid from '@material-ui/core/Grid';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles, ThemeProvider } from '@material-ui/core/styles';
+import { BrowserRouter as Router, Route, Switch, Redirect, useHistory } from "react-router-dom";
 
 import theme from '../utils/themeUtil';
 import Button from '../components/common/Button/index'
@@ -66,6 +67,7 @@ const useStyles = makeStyles(theme => ({
 
 
 function SignIn(props) {
+  let history = useHistory();
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [error, setError] = useState({})
@@ -109,7 +111,9 @@ function SignIn(props) {
         // toggleAuthStatus
         
         // redirect signed in user to dashboard
-        props.history.push('/dashboard');
+        // const { history } = props;
+        history.push("/dashboard")
+        // props.history.push('/dashboard');
         
     })
     // .catch(( {response} ) => {
