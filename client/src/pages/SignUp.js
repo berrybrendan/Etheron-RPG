@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import Avatar from '@material-ui/core/Avatar';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import TextField from '@material-ui/core/TextField';
@@ -12,6 +12,9 @@ import Container from '@material-ui/core/Container';
 
 import theme from '../utils/themeUtil';
 import Button from '../components/common/Button/index'
+
+import Auth from '../utils/Auth'
+import API from '../utils/API'
 
 function Copyright() {
   return (
@@ -48,8 +51,64 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-function SignUp() {
+function SignUp(props) {
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
+  const [name, setName] = useState('')
+  const [error, setError] = useState({})
+  const [successMessage, setSuccessMessage] = useState('')
   const classes = useStyles();
+
+
+  useEffect(() => {
+    const storedMessage = localStorage.getItem('successMessage');
+    let successMessage = '';
+
+    if (storedMessage) {
+      successMessage = storedMessage;
+      localStorage.removeItem('successMessage');
+    }
+    setSuccessMessage(successMessage)
+    //this.setState({ successMessage });
+  })
+
+  const processForm = (event) => {
+    // prevent default action. in this case, action is the form submission event
+    event.preventDefault();
+    const user = {
+      email: email,
+      password: password,
+      name: name
+    }
+    console.log(email, password, name)
+    console.log(user)
+  
+    // create a string for an HTTP body message
+    //const { email, password } = this.state.user;
+  
+    API.signUp({email:email, password: password, name: name}).then(res => {
+
+      localStorage.setItem('successMessage', res.data.message);
+
+        // redirect user after sign up to login page
+        props.history.push('/');
+        
+    })
+    .catch(( res ) => {
+      console.log(res)
+        // const errors = response.data.errors ? response.data.errors : {};
+        // errors.summary = response.data.message;
+  
+        // setError({
+        //   errors
+        // });
+      });
+    
+  }
+
+
+
+  // const classes = useStyles();
 
   return (
     <ThemeProvider theme={ theme }>
@@ -62,7 +121,7 @@ function SignUp() {
             <Typography component="h1" variant="h5">
             Sign up
             </Typography>
-            <form className={classes.form} noValidate>
+            <form className={classes.form} onSubmit={processForm} noValidate>
             <Grid container spacing={2}>
                 <Grid item xs={12} sm={6}>
                 <TextField
@@ -73,6 +132,7 @@ function SignUp() {
                     fullWidth
                     id="firstName"
                     label="First Name"
+                    onChange={(event) => {setName(event.target.value)}}
                     autoFocus
                 />
                 </Grid>
@@ -94,6 +154,7 @@ function SignUp() {
                     fullWidth
                     id="email"
                     label="Email Address"
+                    onChange={(event) => {setEmail(event.target.value)}}
                     name="email"
                     autoComplete="email"
                 />
@@ -106,6 +167,7 @@ function SignUp() {
                     name="password"
                     label="Password"
                     type="password"
+                    onChange={(event) => {setPassword(event.target.value)}}
                     id="password"
                     autoComplete="current-password"
                 />
