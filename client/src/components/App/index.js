@@ -32,12 +32,11 @@ function App() {
     <Router>
       <ThemeProvider theme={theme}>
         <Switch>
-          <Route exact path='/' component={() => <SignIn toggleAuthStatus={toggleAuthStatus} number="1"/>} ></Route>
+          <Route exact path='/' component={() => (authenticated 
+            ? <Redirect to="/dashboard" /> 
+            :<SignIn toggleAuthStatus={toggleAuthStatus} />)} ></Route>
           <Route exact path='/signup' component={SignUp}></Route>
-          {/* <Route exact path="/dashboard">
-            {authenticated ? <Redirect to="/dashboard" /> : <Redirect to="/" />}
-          </Route> */}
-          <PrivateRoute exact path="/dashboard" component={Dashboard}/>
+          <PrivateRoute exact path="/dashboard" component={() => <Dashboard toggleAuthStatus={toggleAuthStatus}/>}/>
         </Switch>
       </ThemeProvider>
     </Router>
