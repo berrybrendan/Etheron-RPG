@@ -13,7 +13,7 @@ const app = express();
 
 // connect to the database and load models
 // uses environmental variable for deployment (Heroku) or defaults to local config
-const uri = process.env.MONGODB_URI || config.dbUri;
+const uri = process.env.MONGODB_URI || "mongodb://EtheronDB:xgvm@6cXsjDnjYR@ds217208.mlab.com:17208/heroku_tqdpxpkx";
 
 mongoose.connect(uri);
 // plug in the promise library:
