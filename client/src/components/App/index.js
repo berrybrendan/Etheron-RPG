@@ -11,6 +11,7 @@ import Auth from '../../utils/Auth';
 import { 
   PrivateRoute
 } from '../Routes';
+import Settings from "../../pages/Settings";
 
 function App() {
   // Setting our component's initial state
@@ -38,6 +39,7 @@ function App() {
             :<SignIn toggleAuthStatus={toggleAuthStatus} user={setUser}/>)} ></Route>
           <Route exact path='/signup' component={SignUp}></Route>
           <PrivateRoute exact path="/dashboard" component={() => <Dashboard toggleAuthStatus={toggleAuthStatus} user={user} />}/>
+          <PrivateRoute exact path="/settings" component={() => <Settings />}/>
         </Switch>
       </ThemeProvider>
     </Router>
