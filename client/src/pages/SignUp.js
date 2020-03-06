@@ -123,20 +123,20 @@ function SignUp(props) {
             </Typography>
             <form className={classes.form} onSubmit={processForm} noValidate>
             <Grid container spacing={2}>
-                <Grid item xs={12} sm={6}>
+                <Grid item xs={12} sm={12}>
                 <TextField
                     autoComplete="fname"
-                    name="firstName"
+                    name="userName"
                     variant="outlined"
                     required
                     fullWidth
-                    id="firstName"
-                    label="First Name"
+                    id="userName"
+                    label="Username"
                     onChange={(event) => {setName(event.target.value)}}
                     autoFocus
                 />
                 </Grid>
-                <Grid item xs={12} sm={6}>
+                {/* <Grid item xs={12} sm={6}>
                 <TextField
                     variant="outlined"
                     required
@@ -146,7 +146,7 @@ function SignUp(props) {
                     name="lastName"
                     autoComplete="lname"
                 />
-                </Grid>
+                </Grid> */}
                 <Grid item xs={12}>
                 <TextField
                     variant="outlined"

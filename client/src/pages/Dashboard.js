@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Link from '@material-ui/core/Link';
 import Paper from '@material-ui/core/Paper';
@@ -66,6 +66,7 @@ function Dashboard(props) {
   let history = useHistory();
   const classes = useStyles();
   const number = [5,6,7,8,9];
+  const [username, setUsername]=useState('')
   const character = {
     name: 'Bill',
     type: 'Warrior',
@@ -84,12 +85,22 @@ function Dashboard(props) {
 
 
 
+
+  const callUserInfo = () => {
+    
+  }
+
+
+
   return (
     <ThemeProvider theme={theme}>
       <ButtonAppBar logout={logout} />
       <Grid container component="main" className={classes.root} spacing={3} >
         <CssBaseline />
 
+        <Grid item xs={12} sm={12} md={12}>
+          {`Welcome back, ${username}`}
+        </Grid>
 
         {/* Start of Left Side */}
         <Grid item xs={12} sm={12} md={6} >

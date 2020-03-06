@@ -103,6 +103,7 @@ function SignIn(props) {
     API.login({email:email, password: password}).then(res => {
         // save the token
         Auth.authenticateUser(res.data.token);
+        props.user(email);
   
         // update authenticated state
         // console.log(props.toggleAuthenticateStatus)

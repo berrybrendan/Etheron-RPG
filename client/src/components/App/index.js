@@ -15,6 +15,7 @@ import {
 function App() {
   // Setting our component's initial state
   const [authenticated, setAuthenticated] = useState(false)
+  const[user, setUser] = useState('')
   //const [formObject, setFormObject] = useState({})
 
   // Toggles if the user is authenticated.
@@ -34,9 +35,9 @@ function App() {
         <Switch>
           <Route exact path='/' component={() => (authenticated 
             ? <Redirect to="/dashboard" /> 
-            :<SignIn toggleAuthStatus={toggleAuthStatus} />)} ></Route>
+            :<SignIn toggleAuthStatus={toggleAuthStatus} user={setUser}/>)} ></Route>
           <Route exact path='/signup' component={SignUp}></Route>
-          <PrivateRoute exact path="/dashboard" component={() => <Dashboard toggleAuthStatus={toggleAuthStatus}/>}/>
+          <PrivateRoute exact path="/dashboard" component={() => <Dashboard toggleAuthStatus={toggleAuthStatus} user={user} />}/>
         </Switch>
       </ThemeProvider>
     </Router>
