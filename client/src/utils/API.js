@@ -7,5 +7,5 @@ export default {
   signUp: userData => 
   	 axios.post('/auth/signup', userData),
   dashboard: token =>
-     axios.get('/api/dashboard', {headers: {Authorization: `bearer ${token}`}})
+     axios.get('/api/dashboard', {headers: {Authorization: `bearer ${token}`}}),
 };
