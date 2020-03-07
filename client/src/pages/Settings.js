@@ -12,6 +12,7 @@ import { makeStyles, ThemeProvider } from '@material-ui/core/styles';
 import { useHistory } from "react-router-dom";
 import theme from '../utils/themeUtil';
 import Button from '../components/common/Button/index'
+import SimpleModal from '../components/common/Modal/index'
 import ButtonAppBar from '../components/common/AppBar/index'
 import Selector from '../components/common/Selector/index'
 import SimpleCard from '../components/common/Card/index'
@@ -20,38 +21,38 @@ import Auth from '../utils/Auth'
 
 const AntSwitch = withStyles(theme => ({
     root: {
-      width: 28,
-      height: 16,
-      padding: 0,
-      display: 'flex',
+        width: 28,
+        height: 16,
+        padding: 0,
+        display: 'flex',
     },
     switchBase: {
-      padding: 2,
-      color: theme.palette.grey[500],
-      '&$checked': {
-        transform: 'translateX(12px)',
-        color: theme.palette.common.white,
-        '& + $track': {
-          opacity: 1,
-          backgroundColor: theme.palette.primary.main,
-          borderColor: theme.palette.primary.main,
+        padding: 2,
+        color: theme.palette.grey[500],
+        '&$checked': {
+            transform: 'translateX(12px)',
+            color: theme.palette.common.white,
+            '& + $track': {
+                opacity: 1,
+                backgroundColor: theme.palette.primary.main,
+                borderColor: theme.palette.primary.main,
+            },
         },
-      },
     },
     thumb: {
-      width: 12,
-      height: 12,
-      boxShadow: 'none',
+        width: 12,
+        height: 12,
+        boxShadow: 'none',
     },
     track: {
-      border: `1px solid ${theme.palette.grey[500]}`,
-      borderRadius: 16 / 2,
-      opacity: 1,
-      backgroundColor: theme.palette.common.white,
+        border: `1px solid ${theme.palette.grey[500]}`,
+        borderRadius: 16 / 2,
+        opacity: 1,
+        backgroundColor: theme.palette.common.white,
     },
     checked: {},
-  }))(Switch);
-  
+}))(Switch);
+
 
 function Copyright() {
     return (
@@ -104,7 +105,7 @@ function Settings(props) {
         checkedA: true,
         checkedB: true,
         checkedC: true,
-      });
+    });
     let history = useHistory();
     const classes = useStyles();
     const number = [5, 6, 7, 8, 9];
@@ -117,7 +118,7 @@ function Settings(props) {
 
     const handleChange = name => event => {
         setState({ ...state, [name]: event.target.checked });
-      };
+    };
 
     const logout = () => {
 
@@ -162,6 +163,28 @@ function Settings(props) {
                                     Reset Password
                 </Button>
                             </Grid>
+                            
+                            <Grid item xs={7} sm={7} md={7}>
+                                <Button
+                                    fullWidth
+                                    variant="contained"
+                                    color="secondary"
+                                    className={classes.submit}
+                                >
+                                    Help and Support
+                </Button>
+                            </Grid>
+
+                            <Grid item xs={7} sm={7} md={7}>
+                                <Button
+                                    fullWidth
+                                    variant="contained"
+                                    color="secondary"
+                                    className={classes.submit}
+                                >
+                                    Give us Feedback
+                </Button>
+                            </Grid>
                             <Grid xs={7} sm={7} md={7}>
                                 <Typography component="div">
                                     <Grid component="label" container alignItems="center" spacing={1}>
@@ -178,9 +201,6 @@ function Settings(props) {
                                 </Typography>
                             </Grid>
 
-
-
-
                             {/* <Grid item xs={5} sm={5} md={5}>
                                 <Button
                                     fullWidth
@@ -191,7 +211,7 @@ function Settings(props) {
                                     Delete
                 </Button>
     </Grid>  */}
-                        </Grid>
+                            {/* </Grid>
                         <Selector number={number} />
                         <Grid container spacing={2}>
                             <Grid item xs={8} sm={8} md={8}>
@@ -206,7 +226,19 @@ function Settings(props) {
                                 >
                                     Start
                 </Button>
-                            </Grid>
+                            </Grid> */}
+                            
+                            
+                            <Grid item xs={7} sm={7} md={7} >
+                    <SimpleModal buttonName = {'ABOUT US'}
+                    modalTitle = {'The Badass GameMakers'}
+                    modalContent = {'We met a long time ago in a far away place,and we have been thrashing monsters and demons ever since.'} />
+                </Grid> 
+
+
+
+
+
                         </Grid>
                     </Container>
                 </Grid>

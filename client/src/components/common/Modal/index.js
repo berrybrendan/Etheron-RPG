@@ -28,39 +28,48 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-export default function SimpleModal() {
-    const classes = useStyles();
-    // getModalStyle is not a pure function, we roll the style only on the first render
-    const [modalStyle] = React.useState(getModalStyle);
-    const [open, setOpen] = React.useState(false);
-  
-    const handleOpen = () => {
-      setOpen(true);
-    };
-  
-    const handleClose = () => {
-      setOpen(false);
-    };
-  
-    return (
-      <div>
-        <button type="button" onClick={handleOpen}>
-          Open Modal
+
+
+
+
+export default function SimpleModal(props) {
+  const classes = useStyles();
+  // getModalStyle is not a pure function, we roll the style only on the first render
+  const [modalStyle] = React.useState(getModalStyle);
+  const [open, setOpen] = React.useState(false);
+  // passed through props so we could reuse the modal component
+  const buttonName = props.buttonName;
+  const modalTitle = props.modalTitle;
+  const modalContent = props.modalContent;
+
+  const handleOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
+  return (
+    <div>
+      <button type="button" onClick={handleOpen}>
+        {buttonName} 
         </button>
-        <Modal
-          aria-labelledby="simple-modal-title"
-          aria-describedby="simple-modal-description"
-          open={open}
-          onClose={handleClose}
-        >
-          <div style={modalStyle} className={classes.paper}>
-            <h2 id="simple-modal-title">Text in a modal</h2>
-            <p id="simple-modal-description">
-              Duis mollis, est non commodo luctus, nisi erat porttitor ligula.
+      <Modal
+        aria-labelledby="simple-modal-title"
+        aria-describedby="simple-modal-description"
+        open={open}
+        onClose={handleClose}
+      >
+        <div style={modalStyle} className={classes.paper}>
+  <h2 id="simple-modal-title">{modalTitle}</h2>
+          <p id="simple-modal-description">
+          {modalContent}
             </p>
-            <SimpleModal />
-          </div>
-        </Modal>
-      </div>
-    );
+              {/* Deleted the button within the modal */}
+          {/* <SimpleModal /> */}
+        </div>
+      </Modal>
+    </div>
+  );
 }
