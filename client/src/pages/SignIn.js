@@ -85,7 +85,7 @@ function SignIn(props) {
     }
     setSuccessMessage(successMessage)
     //this.setState({ successMessage });
-  })
+  },[])
 
   const processForm = (event) => {
     // prevent default action. in this case, action is the form submission event
@@ -103,16 +103,9 @@ function SignIn(props) {
     API.login({email:email, password: password}).then(res => {
         // save the token
         Auth.authenticateUser(res.data.token);
+        console.log(res)
         props.user(email);
-  
-        // update authenticated state
-        // console.log(props.toggleAuthenticateStatus)
-        console.log(props.number)
         props.toggleAuthStatus()
-        // toggleAuthStatus
-        
-        // redirect signed in user to dashboard
-        // const { history } = props;
         history.push("/dashboard")
         // props.history.push('/dashboard');
         

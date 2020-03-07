@@ -15,6 +15,7 @@ import Selector from '../components/common/Selector/index'
 import SimpleCard from '../components/common/Card/index'
 
 import Auth from '../utils/Auth'
+import API from '../utils/API'
 
 function Copyright() {
   return (
@@ -83,11 +84,20 @@ function Dashboard(props) {
 
   }
 
-
+useEffect(() => {
+  API.dashboard(Auth.getToken())
+    .then(res => {
+      console.log(res)
+    })
+  // callUserInfo()
+},[])
 
 
   const callUserInfo = () => {
-    
+    API.getUser(props.user)
+    .then(res => {
+      console.log(res)
+    })
   }
 
 
