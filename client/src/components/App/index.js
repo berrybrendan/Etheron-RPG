@@ -16,6 +16,7 @@ import Settings from "../../pages/Settings";
 function App() {
   // Setting our component's initial state
   const [authenticated, setAuthenticated] = useState(false)
+  const[user, setUser] = useState('')
   //const [formObject, setFormObject] = useState({})
 
   // Toggles if the user is authenticated.
@@ -29,15 +30,17 @@ function App() {
   };
 
 
+
+
   return (
     <Router>
       <ThemeProvider theme={theme}>
         <Switch>
           <Route exact path='/' component={() => (authenticated 
             ? <Redirect to="/dashboard" /> 
-            :<SignIn toggleAuthStatus={toggleAuthStatus} />)} ></Route>
-          <Route exact path='/signup' component={SignUp}></Route>
-          <PrivateRoute exact path="/dashboard" component={() => <Dashboard toggleAuthStatus={toggleAuthStatus}/>}/>
+            :<SignIn toggleAuthStatus={toggleAuthStatus} user={setUser}/>)} ></Route>
+          <Route exact path='/signup' component={() => (<SignUp toggleAuthStatus={toggleAuthStatus}/>)}></Route>
+          <PrivateRoute exact path="/dashboard" component={() => <Dashboard toggleAuthStatus={toggleAuthStatus} user={user} />}/>
           <PrivateRoute exact path="/settings" component={() => <Settings />}/>
         </Switch>
       </ThemeProvider>

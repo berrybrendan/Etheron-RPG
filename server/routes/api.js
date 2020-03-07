@@ -1,6 +1,10 @@
 const express = require('express');
-
+const userController = require("../controllers/usersController");
 const router = new express.Router();
+
+router.route('/user/')
+  .get(userController.findAll);
+
 
 router.get('/dashboard', (req, res) => {
   res.status(200).json({

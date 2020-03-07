@@ -9,6 +9,7 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles, ThemeProvider } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
+import {  useHistory } from "react-router-dom";
 
 import theme from '../utils/themeUtil';
 import Button from '../components/common/Button/index'
@@ -52,10 +53,11 @@ const useStyles = makeStyles(theme => ({
 }));
 
 function SignUp(props) {
+  let history = useHistory()
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [name, setName] = useState('')
-  const [error, setError] = useState({})
+  // const [error, setError] = useState({})
   const [successMessage, setSuccessMessage] = useState('')
   const classes = useStyles();
 
@@ -89,9 +91,19 @@ function SignUp(props) {
     API.signUp({email:email, password: password, name: name}).then(res => {
 
       localStorage.setItem('successMessage', res.data.message);
+      API.login({email:email, password: password}).then(res => {
+        // save the token
+        Auth.authenticateUser(res.data.token);
+        console.log(res)
+        // props.user(email);
+        props.toggleAuthStatus()
+        history.push("/dashboard")
+        // props.history.push('/dashboard');
+        
+    })
 
         // redirect user after sign up to login page
-        props.history.push('/');
+        // props.history.push('/');
         
     })
     .catch(( res ) => {
@@ -123,20 +135,20 @@ function SignUp(props) {
             </Typography>
             <form className={classes.form} onSubmit={processForm} noValidate>
             <Grid container spacing={2}>
-                <Grid item xs={12} sm={6}>
+                <Grid item xs={12} sm={12}>
                 <TextField
                     autoComplete="fname"
-                    name="firstName"
+                    name="userName"
                     variant="outlined"
                     required
                     fullWidth
-                    id="firstName"
-                    label="First Name"
+                    id="userName"
+                    label="Username"
                     onChange={(event) => {setName(event.target.value)}}
                     autoFocus
                 />
                 </Grid>
-                <Grid item xs={12} sm={6}>
+                {/* <Grid item xs={12} sm={6}>
                 <TextField
                     variant="outlined"
                     required
@@ -146,7 +158,7 @@ function SignUp(props) {
                     name="lastName"
                     autoComplete="lname"
                 />
-                </Grid>
+                </Grid> */}
                 <Grid item xs={12}>
                 <TextField
                     variant="outlined"
