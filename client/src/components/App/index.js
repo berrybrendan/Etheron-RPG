@@ -30,6 +30,8 @@ function App() {
   };
 
 
+
+
   return (
     <Router>
       <ThemeProvider theme={theme}>
@@ -37,7 +39,7 @@ function App() {
           <Route exact path='/' component={() => (authenticated 
             ? <Redirect to="/dashboard" /> 
             :<SignIn toggleAuthStatus={toggleAuthStatus} user={setUser}/>)} ></Route>
-          <Route exact path='/signup' component={SignUp}></Route>
+          <Route exact path='/signup' component={() => (<SignUp toggleAuthStatus={toggleAuthStatus}/>)}></Route>
           <PrivateRoute exact path="/dashboard" component={() => <Dashboard toggleAuthStatus={toggleAuthStatus} user={user} />}/>
           <PrivateRoute exact path="/settings" component={() => <Settings />}/>
         </Switch>
