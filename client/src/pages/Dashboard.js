@@ -90,11 +90,39 @@ function Dashboard(props) {
     API.dashboard(Auth.getToken())
       .then(res => {
         callUserInfo(res.data.user)
-        //console.log(res.data.user._id)
+        console.log(res.data.user._id)
         // setUsername(res.data.user.name)
       })
     // callUserInfo()
   }, [])
+
+  const createCharacter = () => {
+    console.log('clicked')
+    const token = Auth.getToken()
+    const wCharacter = {
+      // headers: {
+      //   Authorization: `bearer ${token}`
+      // },
+      name: "Wild Bill",
+      type: "Warrior",
+      silver: 78,
+      stats: {
+        level: 5,
+        maxhealth: 30,
+        currenthealth: 27,
+        strength: 14,
+        intel: 17,
+        speed: 12,
+        defense: 9
+      },
+      summoner: dbID
+    }
+    console.log(wCharacter)
+    API.createCharacter(wCharacter)
+    .then(res => {
+      console.log("success")
+    })
+  }
 
 
   const callUserInfo = (user) => {
@@ -138,6 +166,7 @@ function Dashboard(props) {
                   variant="contained"
                   color="secondary"
                   className={classes.submit}
+                  onClick={createCharacter}
                 >
                   New Character
                 </Button>

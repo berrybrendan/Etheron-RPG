@@ -2,6 +2,7 @@ const express = require("express");
 const path = require("path");
 const bodyParser = require('body-parser');
 const passport = require('passport');
+const routes = require('./server/routes')
 const config = require('./server/config');
 const logger = require('morgan')
 const mongoose = require('mongoose')
@@ -49,10 +50,12 @@ const authCheckMiddleware = require('./server/middleware/auth-check');
 app.use('/api', authCheckMiddleware);
 
 // routes
-const authRoutes = require('./server/routes/auth');
-const apiRoutes = require('./server/routes/api');
-app.use('/auth', authRoutes);
-app.use('/api', apiRoutes);
+// const authRoutes = require('./server/routes/auth');
+// // const authRoutes = require('./server/routes/index');
+// const apiRoutes = require('./server/routes/api');
+// app.use('/auth', authRoutes);
+// app.use('/api', apiRoutes);
+app.use(routes)
 
 // Send every request to the React app
 // Define any API routes before this runs
