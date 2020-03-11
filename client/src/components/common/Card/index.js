@@ -32,7 +32,7 @@ export default function SimpleCard(props) {
     <Card className={classes.root}>
       <CardContent>
         <Typography variant="h2" component="h2">
-         {character.name}
+          {character.name}
         </Typography>
         <Typography className={classes.pos} color="textSecondary">
           {character.type}
