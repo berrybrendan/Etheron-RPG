@@ -8,7 +8,12 @@ const UserSchema = new mongoose.Schema({
     index: { unique: true }
   },
   password: String,
-  name: String
+  name: String,
+  // characters: [{
+  //   type: Schema.Types.ObjectId,
+  //   ref: 'Character',
+  //   default: () => {return null}
+  // }]
 });
 
 

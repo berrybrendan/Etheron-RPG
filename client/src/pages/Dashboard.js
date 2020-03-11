@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Link from '@material-ui/core/Link';
 import Paper from '@material-ui/core/Paper';
@@ -15,6 +15,7 @@ import Selector from '../components/common/Selector/index'
 import SimpleCard from '../components/common/Card/index'
 
 import Auth from '../utils/Auth'
+import API from '../utils/API'
 
 function Copyright() {
   return (
@@ -65,7 +66,10 @@ const useStyles = makeStyles(theme => ({
 function Dashboard(props) {
   let history = useHistory();
   const classes = useStyles();
-  const number = [5,6,7,8,9];
+  let dbID;
+  const number = [5, 6, 7, 8, 9];
+  const [userId, setUserId] = useState('')
+  const [username, setUsername] = useState('')
   const character = {
     name: 'Bill',
     type: 'Warrior',
@@ -82,63 +86,125 @@ function Dashboard(props) {
 
   }
 
+  useEffect(() => {
+    API.dashboard(Auth.getToken())
+      .then(res => {
+        callUserInfo(res.data.user)
+        console.log(res.data.user._id)
+        // setUsername(res.data.user.name)
+      })
+    // callUserInfo()
+  }, [])
+
+  const createCharacter = () => {
+    console.log('clicked')
+    const token = Auth.getToken()
+    const wCharacter = {
+      // headers: {
+      //   Authorization: `bearer ${token}`
+      // },
+      name: "Wild Bill",
+      type: "Warrior",
+      silver: 78,
+      stats: {
+        level: 5,
+        maxhealth: 30,
+        currenthealth: 27,
+        strength: 14,
+        intel: 17,
+        speed: 12,
+        defense: 9
+      },
+      summoner: dbID
+    }
+    console.log(wCharacter)
+    API.createCharacter(wCharacter)
+    .then(res => {
+      console.log("success")
+    })
+  }
+
+
+  const callUserInfo = (user) => {
+    setUsername(user.name)
+    setUserId(user._id)
+    dbID = user._id
+    // console.log(user._id)
+    // console.log({dbID})
+  }
+
 
 
   return (
     <ThemeProvider theme={theme}>
       <ButtonAppBar logout={logout} />
+      <Container>
+        <Typography variant="body2" color="textSecondary" align="center">
+          <h2>{`Welcome back, ${username}`}</h2>
+        </Typography>
+
+      </Container>
       <Grid container component="main" className={classes.root} spacing={3} >
         <CssBaseline />
 
+        {/* <Grid item xs={12} sm={12} md={12}>
+          <Container>
+            <Typography variant="body2" color="textSecondary" align="center">
+              <h2>{`Welcome back, ${username}`}</h2>
+            </Typography>
+
+          </Container>
+        </Grid> */}
 
         {/* Start of Left Side */}
         <Grid item xs={12} sm={12} md={6} >
           <Container>
-          <Grid container spacing={2}>
-          <Grid item xs={7} sm={7} md={7}>
-            <Button
-              fullWidth
-              variant="contained"
-              color="secondary"
-              className={classes.submit}
-            >
-              New Character
+            <Grid container spacing={2}>
+              <Grid item xs={7} sm={7} md={7}>
+                <Button
+                  fullWidth
+                  variant="contained"
+                  color="secondary"
+                  className={classes.submit}
+                  onClick={createCharacter}
+                >
+                  New Character
                 </Button>
-          </Grid>
-          <Grid item xs={5} sm={5} md={5}>
-            <Button
-              fullWidth
-              variant="contained"
-              color="secondary"
-              className={classes.submit}
-            >
-              Delete
+              </Grid>
+              <Grid item xs={5} sm={5} md={5}>
+                <Button
+                  fullWidth
+                  variant="contained"
+                  color="secondary"
+                  className={classes.submit}
+                >
+                  Delete
                 </Button>
-          </Grid>
-          </Grid>
-          <Selector number={number} />
-          <Grid container spacing={2}>
-          <Grid item xs={8} sm={8} md={8}>
-           
-          </Grid>
-          <Grid item xs={4} sm={4} md={4}>
-            <Button
-              fullWidth
-              variant="contained"
-              color="secondary"
-              className={classes.submit}
-            >
-              Start
+              </Grid>
+            </Grid>
+            <Selector number={number} />
+            <Grid container spacing={2}>
+              <Grid item xs={8} sm={8} md={8}>
+
+              </Grid>
+              <Grid item xs={4} sm={4} md={4}>
+                <Button
+                  fullWidth
+                  variant="contained"
+                  color="secondary"
+                  className={classes.submit}
+                >
+                  Start
                 </Button>
-          </Grid>
-          </Grid>
+              </Grid>
+            </Grid>
           </Container>
         </Grid>
-        
 
-{/* Start of Right Side */}
+
+        {/* Start of Right Side */}
         <Grid item xs={12} sm={12} md={6} >
-          <SimpleCard character={character}/>
+          <SimpleCard character={character} />
         </Grid>
       </Grid>
     </ThemeProvider>

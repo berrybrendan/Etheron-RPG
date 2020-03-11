@@ -11,7 +11,8 @@ import Grid from '@material-ui/core/Grid';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles, ThemeProvider } from '@material-ui/core/styles';
-import { BrowserRouter as Router, Route, Switch, Redirect, useHistory } from "react-router-dom";
+import {  useHistory } from "react-router-dom";
+// import { BrowserRouter as Router, Route, Switch, Redirect, useHistory } from "react-router-dom";
 
 import theme from '../utils/themeUtil';
 import Button from '../components/common/Button/index'
@@ -85,7 +86,7 @@ function SignIn(props) {
     }
     setSuccessMessage(successMessage)
     //this.setState({ successMessage });
-  })
+  },[])
 
   const processForm = (event) => {
     // prevent default action. in this case, action is the form submission event
@@ -103,15 +104,9 @@ function SignIn(props) {
     API.login({email:email, password: password}).then(res => {
         // save the token
         Auth.authenticateUser(res.data.token);
-  
-        // update authenticated state
-        // console.log(props.toggleAuthenticateStatus)
-        console.log(props.number)
+        console.log(res)
+        // props.user(email);
         props.toggleAuthStatus()
-        // toggleAuthStatus
-        
-        // redirect signed in user to dashboard
-        // const { history } = props;
         history.push("/dashboard")
         // props.history.push('/dashboard');
         
@@ -144,7 +139,7 @@ function SignIn(props) {
             <form 
             onSubmit={processForm} 
             errors={error}
-            successMessage = {successMessage}
+            // successMessage = {successMessage}
             className={classes.form} 
 
             noValidate>
@@ -155,7 +150,7 @@ function SignIn(props) {
                 fullWidth
                 id="email"
                 onChange={(event) => {setEmail(event.target.value)}}
-                errorText={error.email}
+                // errorText={error.email}
                 label="Email Address"
                 name="email"
                 autoComplete="email"
@@ -169,7 +164,7 @@ function SignIn(props) {
                 name="password"
                 label="Password"
                 onChange={(event) => {setPassword(event.target.value)}}
-                errorText={error.password}
+                // errorText={error.password}
                 type="password"
                 id="password"
                 autoComplete="current-password"

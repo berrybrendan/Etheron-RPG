@@ -33,7 +33,7 @@ export default function ButtonAppBar(props) {
           <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu">
             <MenuIcon />
           </IconButton>
-          <Typography variant="h6" className={classes.title} align="center">
+          <Typography variant="h5" className={classes.title} align="center">
             Etheron-RPG
           </Typography>
           <Button onClick={props.logout} color="inherit">Logout</Button>
