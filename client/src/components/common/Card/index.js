@@ -25,22 +25,26 @@ const useStyles = makeStyles({
 
 export default function SimpleCard(props) {
   const classes = useStyles();
-  const character = props.character
+  const cardTitle = props.cardTitle
+  const cardHeader= props.cardHeader
+  const cardBody= props.cardBody
+
   const bull = <span className={classes.bullet}>•</span>;
 
   return (
     <Card className={classes.root}>
       <CardContent>
-        <Typography variant="h2" component="h2">
-         {character.name}
+        <Typography variant={props.h ? props.h :"h2"} component="h2">
+         {cardTitle}
         </Typography>
         <Typography className={classes.pos} color="textSecondary">
-          {character.type}
+          {cardHeader}
         </Typography>
         <Typography variant="body2" component="p">
-          {`Gold: ${character.gold} GP`}
+          {cardBody}
           <br />
         </Typography>
+        {props.children}
       </CardContent>
       {/* <CardActions>
         <Button size="small">Learn More</Button>
