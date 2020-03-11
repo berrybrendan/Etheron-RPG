@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Link from '@material-ui/core/Link';
 import Paper from '@material-ui/core/Paper';
@@ -16,8 +16,10 @@ import SimpleModal from '../components/common/Modal/index'
 import ButtonAppBar from '../components/common/AppBar/index'
 import Selector from '../components/common/Selector/index'
 import SimpleCard from '../components/common/Card/index'
+import BasicTextFields from '../components/common/Input/index'
 
 import Auth from '../utils/Auth'
+import { set } from 'mongoose';
 
 const AntSwitch = withStyles(theme => ({
     root: {
@@ -101,11 +103,15 @@ const useStyles = makeStyles(theme => ({
 }));
 
 function Settings(props) {
-    const [state, setState] = React.useState({
+    const [state, setState] = useState({
         checkedA: true,
         checkedB: true,
         checkedC: true,
     });
+    const [feedBack, setFeedBack] = useState(false)
+    const [myAccount, setMyAccount] = useState(false)
+    const [resetPassword, setResetPassword] = useState(false)
+    const [help, setHelp] = useState(false)
     let history = useHistory();
     const classes = useStyles();
     const number = [5, 6, 7, 8, 9];
@@ -113,6 +119,15 @@ function Settings(props) {
         name: 'Bill',
         type: 'Warrior',
         gold: '3000'
+
+    }
+
+    const everyThingFalse = () => {
+        setFeedBack(false)
+        setHelp(false)
+        setResetPassword(false)
+        setMyAccount(false)
+
 
     }
 
@@ -147,6 +162,10 @@ function Settings(props) {
                                     fullWidth
                                     variant="contained"
                                     color="secondary"
+                                    onClick={() => {
+                                        everyThingFalse()
+                                        setMyAccount(true)
+                                    }}
                                     className={classes.submit}
                                 >
                                     My Account
@@ -158,17 +177,25 @@ function Settings(props) {
                                     fullWidth
                                     variant="contained"
                                     color="secondary"
+                                    onClick={() => {
+                                        everyThingFalse()
+                                        setResetPassword(true)
+                                    }}
                                     className={classes.submit}
                                 >
                                     Reset Password
                 </Button>
                             </Grid>
-                            
+
                             <Grid item xs={7} sm={7} md={7}>
                                 <Button
                                     fullWidth
                                     variant="contained"
                                     color="secondary"
+                                    onClick={() => {
+                                        everyThingFalse()
+                                        setHelp(true)
+                                    }}
                                     className={classes.submit}
                                 >
                                     Help and Support
@@ -180,6 +207,10 @@ function Settings(props) {
                                     fullWidth
                                     variant="contained"
                                     color="secondary"
+                                    onClick={() => {
+                                        everyThingFalse()
+                                        setFeedBack(true)
+                                    }}
                                     className={classes.submit}
                                 >
                                     Give us Feedback
@@ -227,13 +258,17 @@ function Settings(props) {
                                     Start
                 </Button>
                             </Grid> */}
-                            
-                            
+
+
                             <Grid item xs={7} sm={7} md={7} >
-                    <SimpleModal buttonName = {'ABOUT US'}
-                    modalTitle = {'The Badass GameMakers'}
-                    modalContent = {'We met a long time ago in a far away place,and we have been thrashing monsters and demons ever since.'} />
-                </Grid> 
+                                <SimpleModal
+                                    buttonName={'ABOUT US'}
+                                    fullWidth
+                                    variant="contained"
+                                    color="secondary"
+                                    modalTitle={'The Badass GameMakers'}
+                                    modalContent={'We met a long time ago in a far away place,and we have been thrashing monsters and demons ever since.'} />
+                            </Grid>
 
 
 
@@ -244,11 +279,56 @@ function Settings(props) {
                 </Grid>
 
 
-                {/* Start of Right Side
+                {/* Start of Right Side */}
                 <Grid item xs={12} sm={12} md={8} >
-                    <SimpleCard character={character} />
-                </Grid> */}
+                    {
+                        feedBack
+                            ?  <Container> <SimpleCard
+                            cardTitle = {'Feedback'}
+                            h={"h4"}
+                            cardBody={'This is where the user will be able to give feedback.'}><BasicTextFields /></SimpleCard>
+                            
+                            
+                            </Container>
+                            : null
+                    }
+                    {
+                        myAccount
+                            ? <Container><SimpleCard 
+                            cardTitle = {'My Account'}
+                            h={"h4"}
+                            cardBody={'This is where we will update the users account information'} />
+                            </Container>
+                            : null
+
+                    }
+                    {
+                        resetPassword
+                            ? <Container><SimpleCard 
+                            cardTitle = {'Reset Password'} 
+                            h={"h4"}
+                            cardBody={'This is where we will be able to reset a password.'}/>
+                            </Container>
+                            : null
+
+                    }
+                    {
+                        help
+                            ? <Container><SimpleCard 
+                            cardTitle = {'Help and Support'}
+                            h={"h4"} 
+                            cardBody={'This is where we will give help and support information.'}/>
+                            </Container>
+                            : null
+
+                    }
+
+                </Grid>
+
             </Grid>
+            {/* <Box mt={5}>
+                <Copyright />
+            </Box> */}
         </ThemeProvider >
     );
 }
