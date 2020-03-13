@@ -4,3 +4,48 @@ body {
   font-family: sans-serif;
   background-color: gray;
 }
+
+
+#ant{
+  color: red !important;
+  
+  
+ 
+}
+
+#simpleModalText button{
+
+
+
+
+
+
+-webkit-font-smoothing: antialiased;
+border: 0;
+cursor: pointer;
+display: inline-flex;
+outline: 0;
+position: relative;
+align-items: center;
+user-select: none;
+vertical-align: middle;
+justify-content: center;
+text-decoration: none;
+-webkit-appearance: none;
+-webkit-tap-highlight-color: transparent;
+padding: 6px 16px;
+font-size: 0.875rem;
+min-width: 64px;
+box-sizing: border-box;
+transition: background-color 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms,box-shadow 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms,border 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
+font-family: 'Press Start 2P', cursive;
+font-weight: 500;
+line-height: 1.75;
+border-radius: 4px;
+text-transform: uppercase;
+box-shadow: 0px 3px 1px -2px rgba(0,0,0,0.2),0px 2px 2px 0px rgba(0,0,0,0.14),0px 1px 5px 0px rgba(0,0,0,0.12);
+color: #eeeeee;
+background-color: #b34040;
+width: 100%;
+margin: 24px 0px 16px;
+}
