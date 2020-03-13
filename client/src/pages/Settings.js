@@ -154,7 +154,7 @@ function Settings(props) {
 
 
                 {/* Start of Left Side */}
-                <Grid item xs={12} sm={12} md={4} >
+                <Grid item xs={12} sm={12} md={5} >
                     <Container>
                         <Grid container spacing={2}>
                             <Grid item xs={7} sm={7} md={7}>
@@ -219,9 +219,10 @@ function Settings(props) {
                             <Grid xs={7} sm={7} md={7}>
                                 <Typography component="div">
                                     <Grid component="label" container alignItems="center" spacing={1}>
-                                        <Grid item>Notifications</Grid>
+                                        <Grid item id="ant">Notifications</Grid>
                                         <Grid item>
                                             <AntSwitch
+                                                
                                                 checked={state.checkedC}
                                                 onChange={handleChange('checkedC')}
                                                 value="checkedC"
@@ -260,14 +261,19 @@ function Settings(props) {
                             </Grid> */}
 
 
-                            <Grid item xs={7} sm={7} md={7} >
-                                <SimpleModal
+                            <Grid item xs={7} sm={7} md={7}  id="test">
+                                <div id="simpleModalText"> 
+                                <SimpleModal 
+                                    
                                     buttonName={'ABOUT US'}
                                     fullWidth
                                     variant="contained"
                                     color="secondary"
                                     modalTitle={'The Badass GameMakers'}
                                     modalContent={'We met a long time ago in a far away place,and we have been thrashing monsters and demons ever since.'} />
+
+                                </div>
+                                
                             </Grid>
 
 
@@ -280,7 +286,7 @@ function Settings(props) {
 
 
                 {/* Start of Right Side */}
-                <Grid item xs={12} sm={12} md={8} >
+                <Grid item xs={12} sm={12} md={7} >
                     {
                         feedBack
                             ?  <Container> <SimpleCard
