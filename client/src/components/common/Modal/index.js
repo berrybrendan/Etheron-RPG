@@ -2,6 +2,8 @@ import React from 'react';
 import Modal from '@material-ui/core/Modal';
 import { makeStyles } from '@material-ui/core/styles'
 
+import Button from '../Button'
+
 function rand() {
   return Math.round(Math.random() * 20) - 10;
 }
@@ -29,9 +31,6 @@ const useStyles = makeStyles(theme => ({
 }));
 
 
-
-
-
 export default function SimpleModal(props) {
   const classes = useStyles();
   // getModalStyle is not a pure function, we roll the style only on the first render
@@ -52,22 +51,25 @@ export default function SimpleModal(props) {
 
   return (
     <div>
-      <button type="button" onClick={handleOpen}>
-        {buttonName} 
-        </button>
+      <Button 
+        type='button'
+        fullWidth
+        variant="contained"
+        color="secondary"
+        onClick={handleOpen}>
+          {buttonName}
+      </Button>
       <Modal
         aria-labelledby="simple-modal-title"
         aria-describedby="simple-modal-description"
         open={open}
         onClose={handleClose}
       >
-        <div style={modalStyle} className={classes.paper}>
-  <h2 id="simple-modal-title">{modalTitle}</h2>
+        <div style={modalStyle} className={classes.paper} id="modal-container">
+          <h2 id="simple-modal-title">{modalTitle}</h2>
           <p id="simple-modal-description">
           {modalContent}
             </p>
-              {/* Deleted the button within the modal */}
-          {/* <SimpleModal /> */}
         </div>
       </Modal>
     </div>
