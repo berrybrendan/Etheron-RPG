@@ -1,8 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Link from '@material-ui/core/Link';
-import Paper from '@material-ui/core/Paper';
-import Box from '@material-ui/core/Box';
 import Switch from '@material-ui/core/Switch';
 import { withStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container'
@@ -14,12 +12,10 @@ import theme from '../utils/themeUtil';
 import Button from '../components/common/Button/index'
 import SimpleModal from '../components/common/Modal/index'
 import ButtonAppBar from '../components/common/AppBar/index'
-import Selector from '../components/common/Selector/index'
 import SimpleCard from '../components/common/Card/index'
 import BasicTextFields from '../components/common/Input/index'
 
 import Auth from '../utils/Auth'
-import { set } from 'mongoose';
 
 const AntSwitch = withStyles(theme => ({
     root: {
