@@ -3,16 +3,16 @@ const router = require('express').Router();
 // const router = new express.Router();
 const charactersController = require("../../controllers/charactersController");
 
-// Matches with "/characters"
+// Matches with "/game/characters"
 router.route("/")
-  .get(charactersController.findAll)
+  .get(charactersController.find)
   .post(charactersController.create);
 
-// Matches with "/api/characters/:id"
+// Matches with "/game/characters/:id"
 router
-  .route("/:id")
-  .get(charactersController.findById)
-  .put(charactersController.update)
-  .delete(charactersController.remove);
+  .route("/character/:id")
+  .get(charactersController.find)
+  // .put(charactersController.update)
+  // .delete(charactersController.remove);
 
 module.exports = router;

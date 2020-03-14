@@ -12,6 +12,8 @@ import {
   PrivateRoute
 } from '../Routes';
 import Settings from "../../pages/Settings";
+import MainGame from "../../pages/MainGame"
+
 
 function App() {
   // Setting our component's initial state
@@ -41,7 +43,8 @@ function App() {
             :<SignIn toggleAuthStatus={toggleAuthStatus} user={setUser}/>)} ></Route>
           <Route exact path='/signup' component={() => (<SignUp toggleAuthStatus={toggleAuthStatus}/>)}></Route>
           <PrivateRoute exact path="/dashboard" component={() => <Dashboard toggleAuthStatus={toggleAuthStatus} user={user} />}/>
-          <PrivateRoute exact path="/settings" component={() => <Settings />}/>
+          <PrivateRoute exact path="/settings" component={() => <Settings toggleAuthStatus={toggleAuthStatus} />}/>
+          <PrivateRoute exact path="/etheron" component={() => <MainGame /> }/>
         </Switch>
       </ThemeProvider>
     </Router>
