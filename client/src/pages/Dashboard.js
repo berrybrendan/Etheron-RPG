@@ -73,6 +73,7 @@ function Dashboard(props) {
   const [userId, setUserId] = useState('')
   const [username, setUsername] = useState('')
   const [characters, setCharacters] = useState([])
+  const [charac, setCharac] = useState({})
   const character = {
     name: 'Bill',
     type: 'Warrior',
@@ -94,14 +95,18 @@ function Dashboard(props) {
       .then(res => {
         setUsername(res.data.user.name)
         setUserId(res.data.user._id)
-        console.log(res.data.user)
-        // API.getCharacters(userId)
-        //   .then(charRes => {
-        //     console.log(charRes)
-        //   })
+        console.log(history.location.pathname)
+        // console.log(res.data.user)
+        API.getCharacters(res.data.user._id)
+          .then(charRes => {
+            console.log(charRes.data.characters)
+            setCharacters(charRes.data.characters)
+          })
       })
   }, [])
 
+
+  // test
   const createCharacter = () => {
     console.log('clicked')
     const token = Auth.getToken()
@@ -109,11 +114,11 @@ function Dashboard(props) {
       // headers: {
       //   Authorization: `bearer ${token}`
       // },
-      name: "Wild Bill",
-      type: "Warrior",
+      name: "Rowdy Alvin",
+      type: "Wizard",
       silver: 78,
       stats: {
-        level: 5,
+        level: 7,
         maxhealth: 30,
         currenthealth: 27,
         strength: 14,
@@ -127,6 +132,7 @@ function Dashboard(props) {
     API.createCharacter(wCharacter)
     .then(res => {
       console.log("success")
+      history.push('/')
     })
   }
 
@@ -191,7 +197,7 @@ function Dashboard(props) {
                 </Button>
               </Grid>
             </Grid>
-            <Selector number={number} />
+            <Selector chars={characters} choose={setCharac} />
             <Grid container spacing={2}>
               <Grid item xs={8} sm={8} md={8}>
 
@@ -214,7 +220,12 @@ function Dashboard(props) {
 
         {/* Start of Right Side */}
         <Grid item xs={12} sm={12} md={6} >
-          <SimpleCard character={character} />
+          <Container>
+          <SimpleCard character={character} cardTitle={charac.name} cardHeader={charac.type ?charac.type :"hello"} />
+          </Container>
+          {/*   const cardTitle = props.cardTitle
+  const cardHeader= props.cardHeader
+  const cardBody= props.cardBody */}
         </Grid>
       </Grid>
     </ThemeProvider>
