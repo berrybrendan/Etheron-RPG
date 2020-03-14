@@ -52,7 +52,7 @@ export default function SimpleModal(props) {
 
   return (
     <div>
-      <button type="button" onClick={handleOpen}>
+      <button class="modal-btn" type="button" onClick={handleOpen}>
         {buttonName} 
         </button>
       <Modal
@@ -61,13 +61,11 @@ export default function SimpleModal(props) {
         open={open}
         onClose={handleClose}
       >
-        <div style={modalStyle} className={classes.paper}>
-  <h2 id="simple-modal-title">{modalTitle}</h2>
+        <div style={modalStyle} className={classes.paper} id="modal-container">
+          <h2 id="simple-modal-title">{modalTitle}</h2>
           <p id="simple-modal-description">
           {modalContent}
             </p>
-              {/* Deleted the button within the modal */}
-          {/* <SimpleModal /> */}
         </div>
       </Modal>
     </div>
