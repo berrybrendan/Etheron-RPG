@@ -6,7 +6,7 @@ module.exports = {
     console.log('here')
     console.log(req.params)
     db.User
-    .find({_id: req.params.id})
+    .findById(req.params.id)
     .populate("characters")
     .sort({date: 1})
     .then(dbUser => {
