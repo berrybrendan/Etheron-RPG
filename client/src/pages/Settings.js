@@ -14,6 +14,7 @@ import SimpleModal from '../components/common/Modal/index'
 import ButtonAppBar from '../components/common/AppBar/index'
 import SimpleCard from '../components/common/Card/index'
 import BasicTextFields from '../components/common/Input/index'
+import DashboardIcon from '@material-ui/icons/Dashboard';
 
 import Auth from '../utils/Auth'
 
@@ -139,12 +140,15 @@ function Settings(props) {
         history.push("/")
 
     }
+    const dash = () => {
+        history.push("/dashboard")
+      }
 
 
 
     return (
         <ThemeProvider theme={theme}>
-            <ButtonAppBar logout={logout} />
+            <ButtonAppBar logout={logout} dash = {dash}/>
             <Grid container component="main" className={classes.root} spacing={3} >
                 <CssBaseline />
 
