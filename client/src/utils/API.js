@@ -10,6 +10,8 @@ export default {
   dashboard: token =>
      axios.get('/api/dashboard', {headers: {Authorization: `bearer ${token}`}}),
    createCharacter: data => 
-      axios.post('/game/characters', data)
+      axios.post('/game/characters', data),
+   getCharacters: id =>
+      axios.get('/game/characters/' + id),
    
 };

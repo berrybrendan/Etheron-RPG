@@ -16,7 +16,7 @@ const CharacterSchema = new mongoose.Schema({
     speed: Number,
     defense: Number
   },
-  // summoner: { type: Schema.Types.ObjectId, ref: 'User' }
+  user: { type: Schema.Types.ObjectId, ref: 'User' }
 });
 
 

@@ -13,9 +13,12 @@ import Button from '../components/common/Button/index'
 import ButtonAppBar from '../components/common/AppBar/index'
 import Selector from '../components/common/Selector/index'
 import SimpleCard from '../components/common/Card/index'
-
+import SimpleModal from '../components/common/Modal/index'
 import Auth from '../utils/Auth'
 import API from '../utils/API'
+
+// const userDB = require('../../../server/controllers/usersController')
+// const characterDB = require('../../../server/controllers/charactersController')
 
 function Copyright() {
   return (
@@ -66,10 +69,10 @@ const useStyles = makeStyles(theme => ({
 function Dashboard(props) {
   let history = useHistory();
   const classes = useStyles();
-  let dbID;
   const number = [5, 6, 7, 8, 9];
   const [userId, setUserId] = useState('')
   const [username, setUsername] = useState('')
+  const [characters, setCharacters] = useState([])
   const character = {
     name: 'Bill',
     type: 'Warrior',
@@ -89,11 +92,14 @@ function Dashboard(props) {
   useEffect(() => {
     API.dashboard(Auth.getToken())
       .then(res => {
-        callUserInfo(res.data.user)
-        console.log(res.data.user._id)
-        // setUsername(res.data.user.name)
+        setUsername(res.data.user.name)
+        setUserId(res.data.user._id)
+        console.log(res.data.user)
+        // API.getCharacters(userId)
+        //   .then(charRes => {
+        //     console.log(charRes)
+        //   })
       })
-    // callUserInfo()
   }, [])
 
   const createCharacter = () => {
@@ -115,7 +121,7 @@ function Dashboard(props) {
         speed: 12,
         defense: 9
       },
-      summoner: dbID
+      user: userId
     }
     console.log(wCharacter)
     API.createCharacter(wCharacter)
@@ -124,20 +130,17 @@ function Dashboard(props) {
     })
   }
 
-
-  const callUserInfo = (user) => {
-    setUsername(user.name)
-    setUserId(user._id)
-    dbID = user._id
-    // console.log(user._id)
-    // console.log({dbID})
+  const gameStart = (player) => {
+    history.push("/etheron")
   }
 
-
+  const settings = () => {
+    history.push("/settings")
+  }
 
   return (
     <ThemeProvider theme={theme}>
-      <ButtonAppBar logout={logout} />
+      <ButtonAppBar logout={logout} settings={settings} />
       <Container>
         <Typography variant="body2" color="textSecondary" align="center">
           <h2>{`Welcome back, ${username}`}</h2>
@@ -161,12 +164,18 @@ function Dashboard(props) {
           <Container>
             <Grid container spacing={2}>
               <Grid item xs={7} sm={7} md={7}>
+                {/* <SimpleModal
+                buttonName={'New Character'}
+                modalTitle={'Create a new adventurer'}
+                modalContent={}>
+                </ SimpleModal> */}
+
                 <Button
                   fullWidth
                   variant="contained"
                   color="secondary"
                   className={classes.submit}
-                  onClick={createCharacter}
+                  onClick={ createCharacter }
                 >
                   New Character
                 </Button>
@@ -193,6 +202,7 @@ function Dashboard(props) {
                   variant="contained"
                   color="secondary"
                   className={classes.submit}
+                  onClick={() => {gameStart("1")}}
                 >
                   Start
                 </Button>
