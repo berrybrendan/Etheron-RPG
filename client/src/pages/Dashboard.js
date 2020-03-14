@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Link from '@material-ui/core/Link';
-import Paper from '@material-ui/core/Paper';
-import Box from '@material-ui/core/Box';
+// import Paper from '@material-ui/core/Paper';
+// import Box from '@material-ui/core/Box';
 import Container from '@material-ui/core/Container'
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
@@ -13,7 +13,7 @@ import Button from '../components/common/Button/index'
 import ButtonAppBar from '../components/common/AppBar/index'
 import Selector from '../components/common/Selector/index'
 import SimpleCard from '../components/common/Card/index'
-import SimpleModal from '../components/common/Modal/index'
+// import SimpleModal from '../components/common/Modal/index'
 import Auth from '../utils/Auth'
 import API from '../utils/API'
 
@@ -69,17 +69,11 @@ const useStyles = makeStyles(theme => ({
 function Dashboard(props) {
   let history = useHistory();
   const classes = useStyles();
-  const number = [5, 6, 7, 8, 9];
   const [userId, setUserId] = useState('')
   const [username, setUsername] = useState('')
   const [characters, setCharacters] = useState([])
   const [charac, setCharac] = useState({})
-  const character = {
-    name: 'Bill',
-    type: 'Warrior',
-    gold: '3000'
 
-  }
 
   const logout = () => {
 
@@ -95,7 +89,7 @@ function Dashboard(props) {
       .then(res => {
         setUsername(res.data.user.name)
         setUserId(res.data.user._id)
-        console.log(history.location.pathname)
+        // console.log(history.location.pathname)
         // console.log(res.data.user)
         API.getCharacters(res.data.user._id)
           .then(charRes => {
@@ -106,14 +100,23 @@ function Dashboard(props) {
   }, [])
 
 
-  // test
+  // Updates the character we are currently on
+  const updateCharacter = () => {
+    console.log('here')
+    const update = charac
+    update.name = "Silver";
+    API.updateCharacter(update._id, update)
+      .then(res => {
+        console.log(res)
+        console.log("success")
+        setCharac(update)
+        // history.push('/')
+      })
+  }
+
   const createCharacter = () => {
     console.log('clicked')
-    const token = Auth.getToken()
     const wCharacter = {
-      // headers: {
-      //   Authorization: `bearer ${token}`
-      // },
       name: "Rowdy Alvin",
       type: "Wizard",
       silver: 78,
@@ -130,10 +133,10 @@ function Dashboard(props) {
     }
     console.log(wCharacter)
     API.createCharacter(wCharacter)
-    .then(res => {
-      console.log("success")
-      history.push('/')
-    })
+      .then(res => {
+        console.log("success")
+        history.push('/')
+      })
   }
 
   const gameStart = (player) => {
@@ -143,7 +146,7 @@ function Dashboard(props) {
   const settings = () => {
     history.push("/settings")
   }
-
+  //test
   return (
     <ThemeProvider theme={theme}>
       <ButtonAppBar logout={logout} settings={settings} />
@@ -181,7 +184,7 @@ function Dashboard(props) {
                   variant="contained"
                   color="secondary"
                   className={classes.submit}
-                  onClick={ createCharacter }
+                  onClick={createCharacter}
                 >
                   New Character
                 </Button>
@@ -192,6 +195,15 @@ function Dashboard(props) {
                   variant="contained"
                   color="secondary"
                   className={classes.submit}
+                  onClick={() => (
+                    API.deleteCharacter(charac._id)
+                      .then(res => {
+                        console.log(res)
+                        console.log("success")
+                        history.push('/')
+
+                      })
+                  )}
                 >
                   Delete
                 </Button>
@@ -208,7 +220,7 @@ function Dashboard(props) {
                   variant="contained"
                   color="secondary"
                   className={classes.submit}
-                  onClick={() => {gameStart("1")}}
+                  onClick={() => { gameStart("1") }}
                 >
                   Start
                 </Button>
@@ -221,8 +233,26 @@ function Dashboard(props) {
         {/* Start of Right Side */}
         <Grid item xs={12} sm={12} md={6} >
           <Container>
-          <SimpleCard character={character} cardTitle={charac.name} cardHeader={charac.type ?charac.type :"hello"} />
+            <SimpleCard 
+            cardTitle={charac.name} 
+            cardHeader={charac.type ? charac.type : "hello"} 
+            cardBody={charac.type ? (
+              <ul>
+                <li>{`Silver: ${charac.silver}`}</li>
+                <li>{`Level: ${charac.stats.level}`}</li>
+              </ul>)
+              :null
+            } />
           </Container>
+          <Button
+                  fullWidth
+                  variant="contained"
+                  color="secondary"
+                  className={classes.submit}
+                  onClick={updateCharacter}
+                >
+                  update
+                </Button>
           {/*   const cardTitle = props.cardTitle
   const cardHeader= props.cardHeader
   const cardBody= props.cardBody */}

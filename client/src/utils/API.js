@@ -13,5 +13,8 @@ export default {
       axios.post('/game/characters', data),
    getCharacters: id =>
       axios.get('/game/characters/' + id),
-   
+   deleteCharacter: id =>
+      axios.delete('/game/characters/' + id),
+   updateCharacter: (id, data) => 
+      axios.put('/game/characters/' + id, data)
 };
