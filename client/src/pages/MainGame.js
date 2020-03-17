@@ -9,8 +9,8 @@ import theme from '../utils/themeUtil';
 
 function MainGame(){
     const unityContent = new UnityContent(
-        "../src/pages/Unity/Build/testExport2.json",
-        "../src/pages/Unity/Build/UnityLoader.js"
+        "Unity/Build/testExport2.json",
+        "Unity/Build/UnityLoader.js"
     );
 
     return(
