@@ -10,13 +10,14 @@ import { makeStyles, ThemeProvider } from '@material-ui/core/styles';
 import { useHistory } from "react-router-dom";
 
 import theme from '../utils/themeUtil';
-import Button from '../components/common/Button/index'
-import ButtonAppBar from '../components/common/AppBar/index'
-import Selector from '../components/common/Selector/index'
-import SimpleCard from '../components/common/Card/index'
-// import SimpleModal from '../components/common/Modal/index'
-import Auth from '../utils/Auth'
-import API from '../utils/API'
+import Button from '../components/common/Button/index';
+import ButtonAppBar from '../components/common/AppBar/index';
+import Selector from '../components/common/Selector/index';
+import SimpleCard from '../components/common/Card/index';
+import SimpleModal from '../components/common/Modal/index';
+import CreateChar from '../components/CreateChar/index';
+import Auth from '../utils/Auth';
+import API from '../utils/API';
 
 // const userDB = require('../../../server/controllers/usersController')
 // const characterDB = require('../../../server/controllers/charactersController')
