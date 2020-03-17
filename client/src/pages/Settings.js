@@ -303,7 +303,7 @@ function Settings(props) {
 
 
                             <Grid item xs={7} sm={7} md={7} id="test">
-                                <div id="simpleModalText">
+                                <div>
                                     <SimpleModal
 
                                         buttonName={'Admin'}
@@ -315,7 +315,6 @@ function Settings(props) {
                                         modalContent={<BasicTextFields labelContent={'Password'} setAdminPass={setAdminPass}
                                         />
                                         } />
-
                                 </div>
 
                             </Grid>

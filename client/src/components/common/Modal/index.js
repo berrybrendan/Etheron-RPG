@@ -1,7 +1,9 @@
 import React from 'react';
 import Modal from '@material-ui/core/Modal';
-import { makeStyles } from '@material-ui/core/styles'
+import { makeStyles, ThemeProvider } from '@material-ui/core/styles'
+import './index.css';
 
+import theme from '../../../utils/themeUtil'
 import Button from '../Button'
 
 function rand() {
@@ -22,11 +24,12 @@ function getModalStyle() {
 const useStyles = makeStyles(theme => ({
   paper: {
     position: 'absolute',
-    width: 400,
+    width: 700,
     backgroundColor: theme.palette.background.paper,
     border: '2px solid #000',
     boxShadow: theme.shadows[5],
     padding: theme.spacing(2, 4, 3),
+    variant: 'elevation'
   },
 }));
 
@@ -50,29 +53,32 @@ export default function SimpleModal(props) {
   };
 
   return (
-    <div>
-      <Button 
-        type='button'
-        fullWidth
-        variant="contained"
-        color="secondary"
-        onClick={handleOpen}>
-          {buttonName}
-      </Button>
-      <Modal
-        aria-labelledby="simple-modal-title"
-        aria-describedby="simple-modal-description"
-        open={open}
-        onClose={handleClose}
-        onSubmit={handleClose}
-      >
-        <div style={modalStyle} className={classes.paper} id="modal-container">
-          <h2 id="simple-modal-title">{modalTitle}</h2>
-          <div id="simple-modal-description">
-          {modalContent}
-            </div>
-        </div>
-      </Modal>
-    </div>
+    <ThemeProvider theme={theme}>
+      <div>
+        <Button 
+          id='modalBtn'
+          type='button'
+          fullWidth
+          variant="contained"
+          color="secondary"
+          onClick={handleOpen}>
+            {buttonName}
+        </Button>
+        <Modal
+          aria-labelledby="simple-modal-title"
+          aria-describedby="simple-modal-description"
+          open={open}
+          onClose={handleClose}
+          onSubmit={handleClose}
+        >
+          <div style={modalStyle} className={classes.paper} id="modal-container">
+            <h2 id="simple-modal-title">{modalTitle}</h2>
+            <div id="simple-modal-description">
+            {modalContent}
+              </div>
+          </div>
+        </Modal>
+      </div>
+    </ThemeProvider>
   );
 }
