@@ -12,10 +12,13 @@ import {
   PrivateRoute
 } from '../Routes';
 import Settings from "../../pages/Settings";
+import MainGame from "../../pages/MainGame"
+
 
 function App() {
   // Setting our component's initial state
   const [authenticated, setAuthenticated] = useState(false)
+  const[user, setUser] = useState('')
   //const [formObject, setFormObject] = useState({})
 
   // Toggles if the user is authenticated.
@@ -29,16 +32,19 @@ function App() {
   };
 
 
+
+
   return (
     <Router>
       <ThemeProvider theme={theme}>
         <Switch>
           <Route exact path='/' component={() => (authenticated 
             ? <Redirect to="/dashboard" /> 
-            :<SignIn toggleAuthStatus={toggleAuthStatus} />)} ></Route>
-          <Route exact path='/signup' component={SignUp}></Route>
-          <PrivateRoute exact path="/dashboard" component={() => <Dashboard toggleAuthStatus={toggleAuthStatus}/>}/>
-          <PrivateRoute exact path="/settings" component={() => <Settings />}/>
+            :<SignIn toggleAuthStatus={toggleAuthStatus} user={setUser}/>)} ></Route>
+          <Route exact path='/signup' component={() => (<SignUp toggleAuthStatus={toggleAuthStatus}/>)}></Route>
+          <PrivateRoute exact path="/dashboard" component={() => <Dashboard toggleAuthStatus={toggleAuthStatus} user={user} />}/>
+          <PrivateRoute exact path="/settings" component={() => <Settings toggleAuthStatus={toggleAuthStatus} />}/>
+          <PrivateRoute exact path="/etheron" component={() => <MainGame /> }/>
         </Switch>
       </ThemeProvider>
     </Router>

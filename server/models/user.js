@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 const bcrypt = require('bcryptjs');
-
+const Schema = mongoose.Schema;
 // define the User model schema
 const UserSchema = new mongoose.Schema({
   email: {
@@ -8,7 +8,11 @@ const UserSchema = new mongoose.Schema({
     index: { unique: true }
   },
   password: String,
-  name: String
+  name: String,
+  characters: [{
+    type: Schema.Types.ObjectId,
+    ref: 'Character'
+  }]
 });
 
 

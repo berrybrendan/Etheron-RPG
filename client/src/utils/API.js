@@ -1,4 +1,5 @@
 import axios from "axios";
+// import Auth from '../utils/Auth'
 
 //methods for interacting with API Auth routes
 export default {
@@ -8,4 +9,12 @@ export default {
   	 axios.post('/auth/signup', userData),
   dashboard: token =>
      axios.get('/api/dashboard', {headers: {Authorization: `bearer ${token}`}}),
+   createCharacter: data => 
+      axios.post('/game/characters', data),
+   getCharacters: id =>
+      axios.get('/game/characters/' + id),
+   deleteCharacter: id =>
+      axios.delete('/game/characters/' + id),
+   updateCharacter: (id, data) => 
+      axios.put('/game/characters/' + id, data)
 };

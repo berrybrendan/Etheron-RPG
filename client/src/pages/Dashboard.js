@@ -1,8 +1,8 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Link from '@material-ui/core/Link';
-import Paper from '@material-ui/core/Paper';
-import Box from '@material-ui/core/Box';
+// import Paper from '@material-ui/core/Paper';
+// import Box from '@material-ui/core/Box';
 import Container from '@material-ui/core/Container'
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
@@ -13,8 +13,12 @@ import Button from '../components/common/Button/index'
 import ButtonAppBar from '../components/common/AppBar/index'
 import Selector from '../components/common/Selector/index'
 import SimpleCard from '../components/common/Card/index'
-
+// import SimpleModal from '../components/common/Modal/index'
 import Auth from '../utils/Auth'
+import API from '../utils/API'
+
+// const userDB = require('../../../server/controllers/usersController')
+// const characterDB = require('../../../server/controllers/charactersController')
 
 function Copyright() {
   return (
@@ -65,13 +69,11 @@ const useStyles = makeStyles(theme => ({
 function Dashboard(props) {
   let history = useHistory();
   const classes = useStyles();
-  const number = [5,6,7,8,9];
-  const character = {
-    name: 'Bill',
-    type: 'Warrior',
-    gold: '3000'
+  const [userId, setUserId] = useState('')
+  const [username, setUsername] = useState('')
+  const [characters, setCharacters] = useState([])
+  const [charac, setCharac] = useState({})
 
-  }
 
   const logout = () => {
 
@@ -82,63 +84,178 @@ function Dashboard(props) {
 
   }
 
+  useEffect(() => {
+    API.dashboard(Auth.getToken())
+      .then(res => {
+        setUsername(res.data.user.name)
+        setUserId(res.data.user._id)
+        // console.log(history.location.pathname)
+        // console.log(res.data.user)
+        API.getCharacters(res.data.user._id)
+          .then(charRes => {
+            console.log(charRes.data.characters)
+            setCharacters(charRes.data.characters)
+          })
+      })
+  }, [])
 
 
+  // Updates the character we are currently on
+  const updateCharacter = () => {
+    console.log('here')
+    const update = charac
+    update.name = "Silver";
+    API.updateCharacter(update._id, update)
+      .then(res => {
+        console.log(res)
+        console.log("success")
+        setCharac(update)
+        // history.push('/')
+      })
+  }
+
+  const createCharacter = () => {
+    console.log('clicked')
+    const wCharacter = {
+      name: "Rowdy Alvin",
+      type: "Wizard",
+      silver: 78,
+      stats: {
+        level: 7,
+        maxhealth: 30,
+        currenthealth: 27,
+        strength: 14,
+        intel: 17,
+        speed: 12,
+        defense: 9
+      },
+      user: userId
+    }
+    console.log(wCharacter)
+    API.createCharacter(wCharacter)
+      .then(res => {
+        console.log("success")
+        history.push('/')
+      })
+  }
+
+  const gameStart = (player) => {
+    history.push("/etheron")
+  }
+
+  const settings = () => {
+    history.push("/settings")
+  }
+  //test
   return (
     <ThemeProvider theme={theme}>
-      <ButtonAppBar logout={logout} />
+      <ButtonAppBar logout={logout} settings={settings} />
+      <Container>
+        <Typography variant="body2" color="textSecondary" align="center">
+          <h2>{`Welcome back, ${username}`}</h2>
+        </Typography>
+
+      </Container>
       <Grid container component="main" className={classes.root} spacing={3} >
         <CssBaseline />
 
+        {/* <Grid item xs={12} sm={12} md={12}>
+          <Container>
+            <Typography variant="body2" color="textSecondary" align="center">
+              <h2>{`Welcome back, ${username}`}</h2>
+            </Typography>
+
+          </Container>
+        </Grid> */}
 
         {/* Start of Left Side */}
         <Grid item xs={12} sm={12} md={6} >
           <Container>
-          <Grid container spacing={2}>
-          <Grid item xs={7} sm={7} md={7}>
-            <Button
-              fullWidth
-              variant="contained"
-              color="secondary"
-              className={classes.submit}
-            >
-              New Character
+            <Grid container spacing={2}>
+              <Grid item xs={7} sm={7} md={7}>
+                {/* <SimpleModal
+                buttonName={'New Character'}
+                modalTitle={'Create a new adventurer'}
+                modalContent={}>
+                </ SimpleModal> */}
+
+                <Button
+                  fullWidth
+                  variant="contained"
+                  color="secondary"
+                  className={classes.submit}
+                  onClick={createCharacter}
+                >
+                  New Character
                 </Button>
-          </Grid>
-          <Grid item xs={5} sm={5} md={5}>
-            <Button
-              fullWidth
-              variant="contained"
-              color="secondary"
-              className={classes.submit}
-            >
-              Delete
+              </Grid>
+              <Grid item xs={5} sm={5} md={5}>
+                <Button
+                  fullWidth
+                  variant="contained"
+                  color="secondary"
+                  className={classes.submit}
+                  onClick={() => (
+                    API.deleteCharacter(charac._id)
+                      .then(res => {
+                        console.log(res)
+                        console.log("success")
+                        history.push('/')
+
+                      })
+                  )}
+                >
+                  Delete
                 </Button>
-          </Grid>
-          </Grid>
-          <Selector number={number} />
-          <Grid container spacing={2}>
-          <Grid item xs={8} sm={8} md={8}>
-           
-          </Grid>
-          <Grid item xs={4} sm={4} md={4}>
-            <Button
-              fullWidth
-              variant="contained"
-              color="secondary"
-              className={classes.submit}
-            >
-              Start
+              </Grid>
+            </Grid>
+            <Selector chars={characters} choose={setCharac} />
+            <Grid container spacing={2}>
+              <Grid item xs={8} sm={8} md={8}>
+
+              </Grid>
+              <Grid item xs={4} sm={4} md={4}>
+                <Button
+                  fullWidth
+                  variant="contained"
+                  color="secondary"
+                  className={classes.submit}
+                  onClick={() => { gameStart("1") }}
+                >
+                  Start
                 </Button>
-          </Grid>
-          </Grid>
+              </Grid>
+            </Grid>
           </Container>
         </Grid>
-        
 
-{/* Start of Right Side */}
+
+        {/* Start of Right Side */}
         <Grid item xs={12} sm={12} md={6} >
-          <SimpleCard character={character}/>
+          <Container>
+            <SimpleCard 
+            cardTitle={charac.name} 
+            cardHeader={charac.type ? charac.type : "hello"} 
+            cardBody={charac.type ? (
+              <ul>
+                <li>{`Silver: ${charac.silver}`}</li>
+                <li>{`Level: ${charac.stats.level}`}</li>
+              </ul>)
+              :null
+            } />
+          </Container>
+          <Button
+                  fullWidth
+                  variant="contained"
+                  color="secondary"
+                  className={classes.submit}
+                  onClick={updateCharacter}
+                >
+                  update
+                </Button>
+          {/*   const cardTitle = props.cardTitle
+  const cardHeader= props.cardHeader
+  const cardBody= props.cardBody */}
         </Grid>
       </Grid>
     </ThemeProvider>
