@@ -10,9 +10,9 @@ router.route("/")
 
 // Matches with "/game/characters/:id"
 router
-  .route("/character/:id")
+  .route("/:id")
   .get(charactersController.find)
-  // .put(charactersController.update)
-  // .delete(charactersController.remove);
+  .put(charactersController.update)
+  .delete(charactersController.remove);
 
 module.exports = router;

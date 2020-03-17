@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import CssBaseline from '@material-ui/core/CssBaseline';
-import Link from '@material-ui/core/Link';
+// import Link from '@material-ui/core/Link';
+// import Paper from '@material-ui/core/Paper';
+// import Box from '@material-ui/core/Box';
 import Container from '@material-ui/core/Container'
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
@@ -8,15 +10,13 @@ import { makeStyles, ThemeProvider } from '@material-ui/core/styles';
 import { useHistory } from "react-router-dom";
 
 import theme from '../utils/themeUtil';
-import Button from '../components/common/Button/index';
-import ButtonAppBar from '../components/common/AppBar/index';
-import Selector from '../components/common/Selector/index';
-import SimpleCard from '../components/common/Card/index';
-import SimpleModal from '../components/common/Modal/index';
-import CreateChar from '../components/CreateChar/index';
-import Auth from '../utils/Auth';
-import API from '../utils/API';
-
+import Button from '../components/common/Button/index'
+import ButtonAppBar from '../components/common/AppBar/index'
+import Selector from '../components/common/Selector/index'
+import SimpleCard from '../components/common/Card/index'
+// import SimpleModal from '../components/common/Modal/index'
+import Auth from '../utils/Auth'
+import API from '../utils/API'
 
 // const userDB = require('../../../server/controllers/usersController')
 // const characterDB = require('../../../server/controllers/charactersController')
@@ -70,16 +70,11 @@ const useStyles = makeStyles(theme => ({
 function Dashboard(props) {
   let history = useHistory();
   const classes = useStyles();
-  const number = [5, 6, 7, 8, 9];
   const [userId, setUserId] = useState('')
   const [username, setUsername] = useState('')
   const [characters, setCharacters] = useState([])
-  const character = {
-    name: 'Bill',
-    type: 'Warrior',
-    gold: '3000'
+  const [charac, setCharac] = useState({})
 
-  }
 
   const logout = () => {
 
@@ -95,26 +90,39 @@ function Dashboard(props) {
       .then(res => {
         setUsername(res.data.user.name)
         setUserId(res.data.user._id)
-        console.log(res.data.user)
-        // API.getCharacters(userId)
-        //   .then(charRes => {
-        //     console.log(charRes)
-        //   })
+        // console.log(history.location.pathname)
+        // console.log(res.data.user)
+        API.getCharacters(res.data.user._id)
+          .then(charRes => {
+            console.log(charRes.data.characters)
+            setCharacters(charRes.data.characters)
+          })
       })
   }, [])
 
+
+  // Updates the character we are currently on
+  const updateCharacter = () => {
+    console.log('here')
+    const update = charac
+    update.name = "Silver";
+    API.updateCharacter(update._id, update)
+      .then(res => {
+        console.log(res)
+        console.log("success")
+        setCharac(update)
+        // history.push('/')
+      })
+  }
+
   const createCharacter = () => {
     console.log('clicked')
-    const token = Auth.getToken()
     const wCharacter = {
-      // headers: {
-      //   Authorization: `bearer ${token}`
-      // },
-      name: "Wild Bill",
-      type: "Warrior",
+      name: "Rowdy Alvin",
+      type: "Wizard",
       silver: 78,
       stats: {
-        level: 5,
+        level: 7,
         maxhealth: 30,
         currenthealth: 27,
         strength: 14,
@@ -126,9 +134,10 @@ function Dashboard(props) {
     }
     console.log(wCharacter)
     API.createCharacter(wCharacter)
-    .then(res => {
-      console.log("success")
-    })
+      .then(res => {
+        console.log("success")
+        history.push('/')
+      })
   }
 
   const gameStart = (player) => {
@@ -138,7 +147,7 @@ function Dashboard(props) {
   const settings = () => {
     history.push("/settings")
   }
-
+  //test
   return (
     <ThemeProvider theme={theme}>
       <ButtonAppBar logout={logout} settings={settings} />
@@ -179,7 +188,7 @@ function Dashboard(props) {
                   variant="contained"
                   color="secondary"
                   className={classes.submit}
-                  onClick={ createCharacter }
+                  onClick={createCharacter}
                 >
                   New Character
                 </Button> */}
@@ -190,12 +199,21 @@ function Dashboard(props) {
                   variant="contained"
                   color="secondary"
                   className={classes.submit}
+                  onClick={() => (
+                    API.deleteCharacter(charac._id)
+                      .then(res => {
+                        console.log(res)
+                        console.log("success")
+                        history.push('/')
+
+                      })
+                  )}
                 >
                   Delete
                 </Button>
               </Grid>
             </Grid>
-            <Selector number={number} />
+            <Selector chars={characters} choose={setCharac} />
             <Grid container spacing={2}>
               <Grid item xs={8} sm={8} md={8}>
 
@@ -206,7 +224,7 @@ function Dashboard(props) {
                   variant="contained"
                   color="secondary"
                   className={classes.submit}
-                  onClick={() => {gameStart("1")}}
+                  onClick={() => { gameStart("1") }}
                 >
                   Start
                 </Button>
@@ -218,7 +236,30 @@ function Dashboard(props) {
 
         {/* Start of Right Side */}
         <Grid item xs={12} sm={12} md={6} >
-          <SimpleCard character={character} />
+          <Container>
+            <SimpleCard 
+            cardTitle={charac.name} 
+            cardHeader={charac.type ? charac.type : "hello"} 
+            cardBody={charac.type ? (
+              <ul>
+                <li>{`Silver: ${charac.silver}`}</li>
+                <li>{`Level: ${charac.stats.level}`}</li>
+              </ul>)
+              :null
+            } />
+          </Container>
+          <Button
+                  fullWidth
+                  variant="contained"
+                  color="secondary"
+                  className={classes.submit}
+                  onClick={updateCharacter}
+                >
+                  update
+                </Button>
+          {/*   const cardTitle = props.cardTitle
+  const cardHeader= props.cardHeader
+  const cardBody= props.cardBody */}
         </Grid>
       </Grid>
     </ThemeProvider>

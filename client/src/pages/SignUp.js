@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import Avatar from '@material-ui/core/Avatar';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import TextField from '@material-ui/core/TextField';
@@ -9,25 +9,26 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles, ThemeProvider } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
-import {  useHistory } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 
 import theme from '../utils/themeUtil';
 import Button from '../components/common/Button/index'
 
 import Auth from '../utils/Auth'
 import API from '../utils/API'
+import Alert from '@material-ui/lab/Alert'
 
 function Copyright() {
   return (
-    <ThemeProvider theme={ theme }>
-        <Typography variant="body2" color="textSecondary" align="center">
+    <ThemeProvider theme={theme}>
+      <Typography variant="body2" color="textSecondary" align="center">
         {'Copyright © '}
         <Link color="inherit" href="http://etheron-rpg.herokuapp.com/">
-            Etheron RPG
+          Etheron RPG
         </Link>{' '}
         {new Date().getFullYear()}
         {'.'}
-        </Typography>
+      </Typography>
     </ThemeProvider>
   );
 }
@@ -57,7 +58,7 @@ function SignUp(props) {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [name, setName] = useState('')
-  // const [error, setError] = useState({})
+  const [error, setError] = useState({})
   const [successMessage, setSuccessMessage] = useState('')
   const classes = useStyles();
 
@@ -84,38 +85,33 @@ function SignUp(props) {
     }
     console.log(email, password, name)
     console.log(user)
-  
+
     // create a string for an HTTP body message
     //const { email, password } = this.state.user;
-  
-    API.signUp({email:email, password: password, name: name}).then(res => {
 
-      localStorage.setItem('successMessage', res.data.message);
-      API.login({email:email, password: password}).then(res => {
-        // save the token
-        Auth.authenticateUser(res.data.token);
-        console.log(res)
-        // props.user(email);
-        props.toggleAuthStatus()
-        history.push("/dashboard")
-        // props.history.push('/dashboard');
-        
-    })
+    API.signUp({ email: email, password: password, name: name })
+      .then(res => {
+        localStorage.setItem('successMessage', res.data.message);
+        API.login({ email: email, password: password }).then(res => {
+          // save the token
+          Auth.authenticateUser(res.data.token);
+          console.log(res)
 
-        // redirect user after sign up to login page
-        // props.history.push('/');
-        
-    })
-    .catch(( res ) => {
-      console.log(res)
+          props.toggleAuthStatus()
+          history.push("/dashboard")
+        })
+      })
+      .catch((errors) => {
+        setError(errors.response.data.errors)
+        console.log(errors.response)
         // const errors = response.data.errors ? response.data.errors : {};
         // errors.summary = response.data.message;
-  
+
         // setError({
         //   errors
         // });
       });
-    
+
   }
 
 
@@ -123,90 +119,97 @@ function SignUp(props) {
   // const classes = useStyles();
 
   return (
-    <ThemeProvider theme={ theme }>
-        <Container component="main" maxWidth="xs">
+    <ThemeProvider theme={theme}>
+      <Container component="main" maxWidth="xs">
         <CssBaseline />
         <div className={classes.paper}>
-            <Avatar className={classes.avatar}>
+          <Avatar className={classes.avatar}>
             <LockOutlinedIcon />
-            </Avatar>
-            <Typography component="h1" variant="h5">
+          </Avatar>
+          <Typography component="h1" variant="h5">
             Sign up
             </Typography>
-            <form className={classes.form} onSubmit={processForm} noValidate>
+          <form 
+          className={classes.form} 
+          onSubmit={processForm} 
+          noValidate>
             <Grid container spacing={2}>
-                <Grid item xs={12} sm={12}>
+              <Grid item xs={12} sm={12}>
                 <TextField
-                    autoComplete="fname"
-                    name="userName"
-                    variant="outlined"
-                    required
-                    fullWidth
-                    id="userName"
-                    label="Username"
-                    onChange={(event) => {setName(event.target.value)}}
-                    autoFocus
+                  autoComplete="fname"
+                  name="userName"
+                  variant="outlined"
+                  required
+                  fullWidth
+                  id="userName"
+                  label="Username"
+                  onChange={(event) => { setName(event.target.value) }}
+                  autoFocus
                 />
-                </Grid>
-                {/* <Grid item xs={12} sm={6}>
+                {
+                  error.name
+                    ? <Alert severity="error">{error.name}</Alert>
+                    : null
+                }
+              </Grid>
+              <Grid item xs={12}>
                 <TextField
-                    variant="outlined"
-                    required
-                    fullWidth
-                    id="lastName"
-                    label="Last Name"
-                    name="lastName"
-                    autoComplete="lname"
+                  variant="outlined"
+                  required
+                  fullWidth
+                  id="email"
+                  label="Email Address"
+                  onChange={(event) => { setEmail(event.target.value.trim().toLowerCase()) }}
+                  name="email"
+                  autoComplete="email"
                 />
-                </Grid> */}
-                <Grid item xs={12}>
+              </Grid>
+              {
+                error.email
+                  ? <Alert severity="error">{error.email}</Alert>
+                  : null
+              }
+              <Grid item xs={12}>
                 <TextField
-                    variant="outlined"
-                    required
-                    fullWidth
-                    id="email"
-                    label="Email Address"
-                    onChange={(event) => {setEmail(event.target.value)}}
-                    name="email"
-                    autoComplete="email"
+                  variant="outlined"
+                  required
+                  fullWidth
+                  name="password"
+                  label="Password"
+                  type="password"
+                  onChange={(event) => { setPassword(event.target.value) }}
+                  id="password"
+                  autoComplete="current-password"
                 />
-                </Grid>
-                <Grid item xs={12}>
-                <TextField
-                    variant="outlined"
-                    required
-                    fullWidth
-                    name="password"
-                    label="Password"
-                    type="password"
-                    onChange={(event) => {setPassword(event.target.value)}}
-                    id="password"
-                    autoComplete="current-password"
-                />
-                </Grid>
+              </Grid>
+              {
+                error.password
+                  ? <Alert severity="error">{error.password}</Alert>
+                  : null
+              }
             </Grid>
             <Button
-                type="submit"
-                fullWidth
-                variant="contained"
-                color="secondary"
-                className={classes.submit}
+              type="submit"
+              fullWidth
+              variant="contained"
+              color="secondary"
+              className={classes.submit}
             >
-                Sign Up
+              Sign Up
             </Button>
             <Grid container justify="flex-end">
-                <Grid item>
-                <Link href="/" variant="body2"> 
-                    Already have an account? Sign in
+              <Grid item>
+                <Link href="/" variant="body2">
+                  Already have an account? Sign in
                 </Link>
-                </Grid>
+              </Grid>
             </Grid>
-            </form>
+          </form>
         </div>
         <Box mt={5}>
-            <Copyright />
+          <Copyright />
         </Box>
-        </Container>
+      </Container>
     </ThemeProvider>
   );
 }

@@ -12,6 +12,10 @@ const UserSchema = new mongoose.Schema({
   characters: [{
     type: Schema.Types.ObjectId,
     ref: 'Character'
+  }],
+  feedback: [{
+    type: Schema.Types.ObjectId,
+    ref: 'Feedback'
   }]
 });
 

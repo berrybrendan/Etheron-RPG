@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 import Avatar from '@material-ui/core/Avatar';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import TextField from '@material-ui/core/TextField';
@@ -11,7 +11,8 @@ import Grid from '@material-ui/core/Grid';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles, ThemeProvider } from '@material-ui/core/styles';
-import {  useHistory } from "react-router-dom";
+import { useHistory } from "react-router-dom";
+import Alert from '@material-ui/lab/Alert'
 // import { BrowserRouter as Router, Route, Switch, Redirect, useHistory } from "react-router-dom";
 
 import theme from '../utils/themeUtil';
@@ -21,15 +22,15 @@ import API from '../utils/API'
 
 function Copyright() {
   return (
-    <ThemeProvider theme={ theme }>
-        <Typography variant="body2" color="textSecondary" align="center">
+    <ThemeProvider theme={theme}>
+      <Typography variant="body2" color="textSecondary" align="center">
         {'Copyright © '}
         <Link color="inherit" href="http://etheron-rpg.herokuapp.com/">
-            Etheron RPG
+          Etheron RPG
         </Link>{' '}
         {new Date().getFullYear()}
         {'.'}
-        </Typography>
+      </Typography>
     </ThemeProvider>
   );
 }
@@ -72,6 +73,7 @@ function SignIn(props) {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [error, setError] = useState({})
+  const [message, setMessage] = useState({})
   const [successMessage, setSuccessMessage] = useState('')
   const classes = useStyles();
 
@@ -86,22 +88,24 @@ function SignIn(props) {
     }
     setSuccessMessage(successMessage)
     //this.setState({ successMessage });
-  },[])
+  }, [])
 
   const processForm = (event) => {
     // prevent default action. in this case, action is the form submission event
     event.preventDefault();
+    
     const user = {
       email: email,
       password: password
     }
     console.log(email, password)
     console.log(user)
-  
+
     // create a string for an HTTP body message
     //const { email, password } = this.state.user;
-  
-    API.login({email:email, password: password}).then(res => {
+
+    API.login({ email: email, password: password })
+      .then(res => {
         // save the token
         Auth.authenticateUser(res.data.token);
         console.log(res)
@@ -109,98 +113,122 @@ function SignIn(props) {
         props.toggleAuthStatus()
         history.push("/dashboard")
         // props.history.push('/dashboard');
+
+      })
+      .catch(( {response} ) => {
+        if(response.data.errors){
+          setError(response.data.errors)
+        }
+        setMessage(response.data)
         
-    })
+        console.log(response)
+      })
     // .catch(( {response} ) => {
-  
+
     //     const errors = response.data.errors ? response.data.errors : {};
     //     errors.summary = response.data.message;
-  
+
     //     setError({
     //       errors
     //     });
     //   });
-    
+
   }
 
   return (
-    <ThemeProvider theme={ theme }>
-        <Grid container component="main" className={classes.root} >
+    <ThemeProvider theme={theme}>
+      <Grid container component="main" className={classes.root} >
         <CssBaseline />
         <Grid item xs={false} sm={4} md={7} className={classes.image} />
         <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
-            <div className={classes.paper}>
+          <div className={classes.paper}>
             <Avatar className={classes.avatar}>
-                <LockOutlinedIcon />
+              <LockOutlinedIcon />
             </Avatar>
             <Typography component="h1" variant="h5">
-                Sign in
+              Sign in
             </Typography>
-            <form 
-            onSubmit={processForm} 
-            errors={error}
-            // successMessage = {successMessage}
-            className={classes.form} 
+            <form
+              onSubmit={processForm}
+              errors={error}
+              // successMessage = {successMessage}
+              className={classes.form}
 
-            noValidate>
-                <TextField
+              noValidate>
+              <TextField
                 variant="outlined"
                 margin="normal"
                 required
                 fullWidth
                 id="email"
-                onChange={(event) => {setEmail(event.target.value)}}
+                onChange={(event) => { setEmail(event.target.value.trim().toLowerCase()) }}
                 // errorText={error.email}
                 label="Email Address"
                 name="email"
                 autoComplete="email"
                 autoFocus
-                />
-                <TextField
+              />
+              {
+                message.message === 'Incorrect email or password'
+                ? <Alert severity="error">{message.message}</Alert>
+                : (error.email
+                  ? <Alert severity="error">{error.email}</Alert>
+                  : null)
+                
+              }
+              <TextField
                 variant="outlined"
                 margin="normal"
                 required
                 fullWidth
                 name="password"
                 label="Password"
-                onChange={(event) => {setPassword(event.target.value)}}
+                onChange={(event) => { setPassword(event.target.value) }}
                 // errorText={error.password}
                 type="password"
                 id="password"
                 autoComplete="current-password"
-                />
-                <FormControlLabel
+              />
+              {
+                message.message === 'Incorrect email or password'
+                ? null
+                : (error.password
+                  ? <Alert severity="error">{error.password}</Alert>
+                  : null)
+                
+              }
+              <FormControlLabel
                 control={<Checkbox value="remember" color="secondary" />}
                 label="Remember me"
-                />
-                <Button
+              />
+              <Button
                 type="submit"
                 fullWidth
                 variant="contained"
                 color="secondary"
                 className={classes.submit}
-                >
+              >
                 Sign In
                 </Button>
-                <Grid container>
+              <Grid container>
                 <Grid item xs>
-                    <Link href="#" variant="body2">
+                  <Link href="#" variant="body2">
                     Forgot password?
                     </Link>
                 </Grid>
                 <Grid item>
-                    <Link href="/signup" variant="body2">
+                  <Link href="/signup" variant="body2">
                     {"Don't have an account? Sign Up"}
-                    </Link>
+                  </Link>
                 </Grid>
-                </Grid>
-                <Box mt={5}>
+              </Grid>
+              <Box mt={5}>
                 <Copyright />
-                </Box>
+              </Box>
             </form>
-            </div>
+          </div>
         </Grid>
-        </Grid>
+      </Grid>
     </ThemeProvider>
   );
 }
