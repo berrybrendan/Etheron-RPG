@@ -15,7 +15,8 @@ import ButtonAppBar from '../components/common/AppBar/index'
 import SimpleCard from '../components/common/Card/index'
 import BasicTextFields from '../components/common/Input/index'
 import DashboardIcon from '@material-ui/icons/Dashboard';
-
+import '../components/common/Modal/index.css';
+import FormControl from '@material-ui/core/FormControl';
 import Auth from '../utils/Auth'
 
 const AntSwitch = withStyles(theme => ({
@@ -216,7 +217,22 @@ function Settings(props) {
                                     Give us Feedback
                 </Button>
                             </Grid>
-                            <Grid xs={7} sm={7} md={7}>
+
+                            <Grid item xs={7} sm={7} md={7}  id="test">
+                                <div id="simpleModalText"> 
+                                <SimpleModal 
+                                    
+                                    buttonName={'ABOUT US'}
+                                    fullWidth
+                                    variant="contained"
+                                    color="secondary"
+                                    modalTitle={'The Badass GameMakers'}
+                                    modalContent={'We met a long time ago in a far away place,and we have been thrashing monsters and demons ever since.'} />
+
+                                </div>
+                                
+                            </Grid>
+                            {/* <Grid xs={7} sm={7} md={7}>
                                 <Typography component="div">
                                     <Grid component="label" container alignItems="center" spacing={1}>
                                         <Grid item id="ant">Notifications</Grid>
@@ -228,10 +244,10 @@ function Settings(props) {
                                                 value="checkedC"
                                             />
                                         </Grid>
-                                        {/* <Grid item>On</Grid> */}
+                                         <Grid item></Grid>
                                     </Grid>
                                 </Typography>
-                            </Grid>
+                            </Grid> */}
 
                             {/* <Grid item xs={5} sm={5} md={5}>
                                 <Button
@@ -265,7 +281,7 @@ function Settings(props) {
                                 <div id="simpleModalText"> 
                                 <SimpleModal 
                                     
-                                    buttonName={'ABOUT US'}
+                                    buttonName={'Admin'}
                                     fullWidth
                                     variant="contained"
                                     color="secondary"
@@ -292,7 +308,12 @@ function Settings(props) {
                             ?  <Container> <SimpleCard
                             cardTitle = {'Feedback'}
                             h={"h4"}
-                            cardBody={'This is where the user will be able to give feedback.'}><BasicTextFields /></SimpleCard>
+                            cardBody={'Please give us some feedback, so we may improve your game experience!'}>
+                                <Container>
+                                <BasicTextFields label="Give feedback here." variant="feedback"
+                                 />
+                                 </Container>
+                                </SimpleCard>
                             
                             
                             </Container>
