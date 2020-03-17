@@ -14,6 +14,7 @@ import SimpleModal from '../components/common/Modal/index'
 import ButtonAppBar from '../components/common/AppBar/index'
 import SimpleCard from '../components/common/Card/index'
 import BasicTextFields from '../components/common/Input/index'
+import MultilineTextFields from '../components/common/TextBox/index'
 import DashboardIcon from '@material-ui/icons/Dashboard';
 import '../components/common/Modal/index.css';
 import FormControl from '@material-ui/core/FormControl';
@@ -232,6 +233,8 @@ function Settings(props) {
                                 </div>
                                 
                             </Grid>
+
+                            
                             {/* <Grid xs={7} sm={7} md={7}>
                                 <Typography component="div">
                                     <Grid component="label" container alignItems="center" spacing={1}>
@@ -308,11 +311,25 @@ function Settings(props) {
                             ?  <Container> <SimpleCard
                             cardTitle = {'Feedback'}
                             h={"h4"}
-                            cardBody={'Please give us some feedback, so we may improve your game experience!'}>
-                                <Container>
-                                <BasicTextFields label="Give feedback here." variant="feedback"
-                                 />
-                                 </Container>
+                            cardBody={'Please give us feedback, so we may improve your game experience!'}>
+                                
+                                <MultilineTextFields
+                                TextFieldLabel ={''}/>
+                                <Grid item xs={7} sm={7} md={7}>
+                                
+                                <Button
+                                    fullWidth
+                                    variant="contained"
+                                    color="secondary"
+                                    onClick={() => {
+                                        everyThingFalse()
+                                        setFeedBack(true)
+                                    }}
+                                    className={classes.submit}
+                                >
+                                    Submit
+                </Button>
+                            </Grid> 
                                 </SimpleCard>
                             
                             
