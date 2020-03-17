@@ -19,6 +19,9 @@ import DashboardIcon from '@material-ui/icons/Dashboard';
 import '../components/common/Modal/index.css';
 import FormControl from '@material-ui/core/FormControl';
 import Auth from '../utils/Auth'
+import API from '../utils/API'
+import Alert from '@material-ui/lab/Alert'
+import TextField from '@material-ui/core/TextField';
 
 const AntSwitch = withStyles(theme => ({
     root: {
@@ -107,25 +110,88 @@ function Settings(props) {
         checkedB: true,
         checkedC: true,
     });
+    const [user, setUser] = useState({})
     const [feedBack, setFeedBack] = useState(false)
+    const [feed, setFeed] = useState('')
     const [myAccount, setMyAccount] = useState(false)
     const [resetPassword, setResetPassword] = useState(false)
     const [help, setHelp] = useState(false)
+    const [success, setSuccess] = useState(false)
+    const [adminPass, setAdminPass] = useState('')
+    const [admin, setAdmin] = useState(false)
+    const [returnFeed, setReturnFeed] = ([])
     let history = useHistory();
     const classes = useStyles();
-    const number = [5, 6, 7, 8, 9];
-    const character = {
-        name: 'Bill',
-        type: 'Warrior',
-        gold: '3000'
 
-    }
+
+    useEffect(() => {
+        API.dashboard(Auth.getToken())
+            .then(res => {
+                setUser(res.data.user)
+                // setUserId(res.data.user._id)
+                // console.log(res.data.user.name)
+                // console.log(history.location.pathname)
+                // console.log(res.data.user)
+
+            })
+    }, [])
 
     const everyThingFalse = () => {
         setFeedBack(false)
         setHelp(false)
         setResetPassword(false)
         setMyAccount(false)
+        setSuccess(false)
+        setFeed('')
+        setAdmin(false)
+
+
+    }
+
+    const clear = () => {
+        // setFeedBack(false)
+        setSuccess(false)
+        // setFeed('')
+        // setFeedBack(true)
+
+
+    }
+
+    const processGetFeedBack = (e) => {
+        e.preventDefault()
+        console.log(adminPass)
+        API.getFeed(adminPass)
+            .then(res => {
+                setReturnFeed(res)
+                console.log(res)
+            })
+            .catch(err => {
+                console.log(err)
+            })
+    }
+
+    const processFeedBack = () => {
+        const feedBackData = {
+            user: user._id,
+            feedback: feed
+        }
+        console.log(feedBackData)
+        API.sendFeed(feedBackData)
+            .then(res => {
+                console.log(res)
+                setFeed('')
+                setFeedBack(false)
+                setFeedBack(true)
+                setSuccess(true)
+
+                setTimeout(clear, 3000)
+                // setTimeout
+
+
+            })
+            .catch(err => {
+                console.log(err)
+            })
 
 
     }
@@ -144,13 +210,13 @@ function Settings(props) {
     }
     const dash = () => {
         history.push("/dashboard")
-      }
+    }
 
 
 
     return (
         <ThemeProvider theme={theme}>
-            <ButtonAppBar logout={logout} dash = {dash}/>
+            <ButtonAppBar logout={logout} dash={dash} />
             <Grid container component="main" className={classes.root} spacing={3} >
                 <CssBaseline />
 
@@ -219,80 +285,54 @@ function Settings(props) {
                 </Button>
                             </Grid>
 
-                            <Grid item xs={7} sm={7} md={7}  id="test">
-                                <div id="simpleModalText"> 
-                                <SimpleModal 
-                                    
-                                    buttonName={'ABOUT US'}
-                                    fullWidth
-                                    variant="contained"
-                                    color="secondary"
-                                    modalTitle={'The Badass GameMakers'}
-                                    modalContent={'We met a long time ago in a far away place,and we have been thrashing monsters and demons ever since.'} />
+                            <Grid item xs={7} sm={7} md={7} id="test">
+                                <div id="simpleModalText">
+                                    <SimpleModal
+
+                                        buttonName={'ABOUT US'}
+                                        fullWidth
+                                        variant="contained"
+                                        color="secondary"
+                                        modalTitle={'The Badass GameMakers'}
+                                        modalContent={'We met a long time ago in a far away place,and we have been thrashing monsters and demons ever since.'} />
 
                                 </div>
-                                
+
                             </Grid>
 
-                            
-                            {/* <Grid xs={7} sm={7} md={7}>
-                                <Typography component="div">
-                                    <Grid component="label" container alignItems="center" spacing={1}>
-                                        <Grid item id="ant">Notifications</Grid>
-                                        <Grid item>
-                                            <AntSwitch
-                                                
-                                                checked={state.checkedC}
-                                                onChange={handleChange('checkedC')}
-                                                value="checkedC"
-                                            />
-                                        </Grid>
-                                         <Grid item></Grid>
-                                    </Grid>
-                                </Typography>
-                            </Grid> */}
 
-                            {/* <Grid item xs={5} sm={5} md={5}>
+
+                            <Grid item xs={7} sm={7} md={7} id="test">
+                                <div id="simpleModalText">
+                                    <SimpleModal
+
+                                        buttonName={'Admin'}
+                                        fullWidth
+                                        variant="contained"
+                                        color="secondary"
+                                        modalTitle={'Password'}
+                                        onClose={() => console.log(adminPass)}
+                                        modalContent={<BasicTextFields labelContent={'Password'} setAdminPass={setAdminPass}
+                                        />
+                                        } />
+
+                                </div>
+
+                            </Grid>
+
+                            <Grid item xs={7} sm={7} md={7}>
                                 <Button
                                     fullWidth
                                     variant="contained"
                                     color="secondary"
+                                    onClick={() => {
+                                        everyThingFalse()
+                                        setAdmin(true)
+                                    }}
                                     className={classes.submit}
                                 >
-                                    Delete
+                                    Admin
                 </Button>
-    </Grid>  */}
-                            {/* </Grid>
-                        <Selector number={number} />
-                        <Grid container spacing={2}>
-                            <Grid item xs={8} sm={8} md={8}>
-
-                            </Grid>
-                            <Grid item xs={4} sm={4} md={4}>
-                                <Button
-                                    fullWidth
-                                    variant="contained"
-                                    color="secondary"
-                                    className={classes.submit}
-                                >
-                                    Start
-                </Button>
-                            </Grid> */}
-
-
-                            <Grid item xs={7} sm={7} md={7}  id="test">
-                                <div id="simpleModalText"> 
-                                <SimpleModal 
-                                    
-                                    buttonName={'Admin'}
-                                    fullWidth
-                                    variant="contained"
-                                    color="secondary"
-                                    modalTitle={'The Badass GameMakers'}
-                                    modalContent={'We met a long time ago in a far away place,and we have been thrashing monsters and demons ever since.'} />
-
-                                </div>
-                                
                             </Grid>
 
 
@@ -307,65 +347,128 @@ function Settings(props) {
                 {/* Start of Right Side */}
                 <Grid item xs={12} sm={12} md={7} >
                     {
-                        feedBack
-                            ?  <Container> <SimpleCard
-                            cardTitle = {'Feedback'}
-                            h={"h4"}
-                            cardBody={'Please give us feedback, so we may improve your game experience!'}>
-                                
-                                <MultilineTextFields
-                                TextFieldLabel ={''}/>
-                                <Grid item xs={7} sm={7} md={7}>
-                                
-                                <Button
-                                    fullWidth
-                                    variant="contained"
-                                    color="secondary"
-                                    onClick={() => {
-                                        everyThingFalse()
-                                        setFeedBack(true)
-                                    }}
-                                    className={classes.submit}
-                                >
-                                    Submit
-                </Button>
-                            </Grid> 
+                        admin
+                            ? <Container>
+                                <SimpleCard
+                                    cardTitle={'Admin'}
+                                    h={"h4"}
+                                    cardBody={'Enter the password of passwords!'}>
+                                    <form
+                                        onSubmit={processGetFeedBack}
+                                        className={classes.form}>
+                                        <TextField
+                                            variant="outlined"
+                                            margin="normal"
+                                            required
+                                            fullWidth
+                                            name="password"
+                                            label="Password"
+                                            onChange={(event) => { setAdminPass(event.target.value) }}
+                                            // errorText={error.password}
+                                            type="password"
+                                            id="password"
+                                            // autoComplete="current-password"
+                                        />
+                                        {/* <BasicTextFields labelContent={'Password'} setAdminPass={setAdminPass}
+                                        /> */}
+                                        <Grid item xs={7} sm={7} md={7}>
+
+                                            {/* <Button
+                                                fullWidth
+                                                type='submit'
+                                                variant="contained"
+                                                color="secondary"
+                                                className={classes.submit}>
+                                                Submit
+                                            </Button> */}
+
+                                        </Grid>
+                                    </form>
                                 </SimpleCard>
-                            
-                            
+
+
+                            </Container>
+                            : null
+                    }
+                    {
+                        feedBack
+                            ? <Container> <SimpleCard
+                                cardTitle={'Feedback'}
+                                h={"h4"}
+                                cardBody={'Please give us feedback, so we may improve your game experience!'}>
+
+                                <MultilineTextFields
+                                    TextFieldLabel={''} setFeed={setFeed} />
+                                <Grid item xs={7} sm={7} md={7}>
+
+                                    <Button
+                                        fullWidth
+                                        variant="contained"
+                                        color="secondary"
+                                        onClick={() => {
+                                            if (feed !== '') {
+                                                // console.log(event.target)
+                                                processFeedBack()
+                                            }
+                                        }}
+                                        className={classes.submit}
+                                    >
+                                        Submit
+                                    </Button>
+                                    {
+                                        success
+                                            ? <Alert severity='success'>{`Thank you for you feedback, ${user.name}!`}</Alert>
+                                            : null
+                                    }
+                                </Grid>
+                            </SimpleCard>
+
+
                             </Container>
                             : null
                     }
                     {
                         myAccount
-                            ? <Container><SimpleCard 
-                            cardTitle = {'My Account'}
-                            h={"h4"}
-                            cardBody={'This is where we will update the users account information'} />
+                            ? <Container><SimpleCard
+                                cardTitle={'My Account'}
+                                h={"h4"}
+                                cardBody={'This is where we will update the users account information'} />
                             </Container>
                             : null
 
                     }
                     {
                         resetPassword
-                            ? <Container><SimpleCard 
-                            cardTitle = {'Reset Password'} 
-                            h={"h4"}
-                            cardBody={'This is where we will be able to reset a password.'}/>
+                            ? <Container><SimpleCard
+                                cardTitle={'Reset Password'}
+                                h={"h4"}
+                                cardBody={'This is where we will be able to reset a password.'} />
                             </Container>
                             : null
 
                     }
                     {
                         help
-                            ? <Container><SimpleCard 
-                            cardTitle = {'Help and Support'}
-                            h={"h4"} 
-                            cardBody={'This is where we will give help and support information.'}/>
+                            ? <Container><SimpleCard
+                                cardTitle={'Help and Support'}
+                                h={"h4"}
+                                cardBody={'This is where we will give help and support information.'} />
                             </Container>
                             : null
 
                     }
+                    {/* {
+                        admin
+                            ? returnFeed.map(f => {
+                                <Container><SimpleCard
+                                    cardTitle={'My Account'}
+                                    h={"h4"}
+                                    cardBody={'This is where we will update the users account information'} />
+                                </Container>
+                            })
+                            : null
+
+                    } */}
 
                 </Grid>
 

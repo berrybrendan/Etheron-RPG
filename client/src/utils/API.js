@@ -16,5 +16,12 @@ export default {
    deleteCharacter: id =>
       axios.delete('/game/characters/' + id),
    updateCharacter: (id, data) => 
-      axios.put('/game/characters/' + id, data)
+      axios.put('/game/characters/' + id, data),
+   sendFeed: (data) =>
+      axios.post('/game/feedback', data),
+   getFeed: (id) => {
+      // if(id==='123456789'){
+         axios.get('/game/feedback')
+      // }
+   }
 };
