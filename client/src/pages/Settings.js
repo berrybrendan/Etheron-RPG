@@ -285,24 +285,11 @@ function Settings(props) {
                 </Button>
                             </Grid>
 
-                            <Grid item xs={7} sm={7} md={7} id="test">
-                                <div id="simpleModalText">
-                                    <SimpleModal
-
-                                        buttonName={'ABOUT US'}
-                                        fullWidth
-                                        variant="contained"
-                                        color="secondary"
-                                        modalTitle={'The Badass GameMakers'}
-                                        modalContent={'We met a long time ago in a far away place,and we have been thrashing monsters and demons ever since.'} />
-
-                                </div>
-
-                            </Grid>
+                            
 
 
 
-                            <Grid item xs={7} sm={7} md={7} id="test">
+                            {/* <Grid item xs={7} sm={7} md={7} id="test">
                                 <div id="simpleModalText">
                                     <SimpleModal
 
@@ -318,7 +305,7 @@ function Settings(props) {
 
                                 </div>
 
-                            </Grid>
+                            </Grid> */}
 
                             <Grid item xs={7} sm={7} md={7}>
                                 <Button
@@ -335,7 +322,20 @@ function Settings(props) {
                 </Button>
                             </Grid>
 
+                            <Grid item xs={7} sm={7} md={7} id="test">
+                                <div id="simpleModalText">
+                                    <SimpleModal
 
+                                        buttonName={'ABOUT US'}
+                                        fullWidth
+                                        variant="contained"
+                                        color="secondary"
+                                        modalTitle={'The Badass GameMakers'}
+                                        modalContent={'We met a long time ago in a far away place,and we have been thrashing monsters and demons ever since.'} />
+
+                                </div>
+
+                            </Grid>
 
 
 
@@ -367,7 +367,7 @@ function Settings(props) {
                                             // errorText={error.password}
                                             type="password"
                                             id="password"
-                                            // autoComplete="current-password"
+                                        // autoComplete="current-password"
                                         />
                                         {/* <BasicTextFields labelContent={'Password'} setAdminPass={setAdminPass}
                                         /> */}
