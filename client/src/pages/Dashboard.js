@@ -1,39 +1,40 @@
 import React, { useState, useEffect } from 'react';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Link from '@material-ui/core/Link';
-import Paper from '@material-ui/core/Paper';
-import Box from '@material-ui/core/Box';
 import Container from '@material-ui/core/Container'
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles, ThemeProvider } from '@material-ui/core/styles';
 import { useHistory } from "react-router-dom";
+
 import theme from '../utils/themeUtil';
-import Button from '../components/common/Button/index'
-import ButtonAppBar from '../components/common/AppBar/index'
-import Selector from '../components/common/Selector/index'
-import SimpleCard from '../components/common/Card/index'
-import SimpleModal from '../components/common/Modal/index'
-import Auth from '../utils/Auth'
-import API from '../utils/API'
+import Button from '../components/common/Button/index';
+import ButtonAppBar from '../components/common/AppBar/index';
+import Selector from '../components/common/Selector/index';
+import SimpleCard from '../components/common/Card/index';
+import SimpleModal from '../components/common/Modal/index';
+import CreateChar from '../components/CreateChar/index';
+import Auth from '../utils/Auth';
+import API from '../utils/API';
+
 
 // const userDB = require('../../../server/controllers/usersController')
 // const characterDB = require('../../../server/controllers/charactersController')
 
-function Copyright() {
-  return (
-    <ThemeProvider theme={theme}>
-      <Typography variant="body2" color="textSecondary" align="center">
-        {'Copyright © '}
-        <Link color="inherit" href="http://etheron-rpg.herokuapp.com/">
-          Etheron RPG
-        </Link>{' '}
-        {new Date().getFullYear()}
-        {'.'}
-      </Typography>
-    </ThemeProvider>
-  );
-}
+// function Copyright() {
+//   return (
+//     <ThemeProvider theme={theme}>
+//       <Typography variant="body2" color="textSecondary" align="center">
+//         {'Copyright © '}
+//         <Link color="inherit" href="http://etheron-rpg.herokuapp.com/">
+//           Etheron RPG
+//         </Link>{' '}
+//         {new Date().getFullYear()}
+//         {'.'}
+//       </Typography>
+//     </ThemeProvider>
+//   );
+// }
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -164,13 +165,16 @@ function Dashboard(props) {
           <Container>
             <Grid container spacing={2}>
               <Grid item xs={7} sm={7} md={7}>
-                {/* <SimpleModal
+                <SimpleModal
                 buttonName={'New Character'}
+                fullWidth
+                variant="contained"
+                color="secondary"
+                id={userId}
                 modalTitle={'Create a new adventurer'}
-                modalContent={}>
-                </ SimpleModal> */}
-
-                <Button
+                modalContent={<CreateChar></CreateChar>}>
+                </SimpleModal>
+                {/* <Button
                   fullWidth
                   variant="contained"
                   color="secondary"
@@ -178,7 +182,7 @@ function Dashboard(props) {
                   onClick={ createCharacter }
                 >
                   New Character
-                </Button>
+                </Button> */}
               </Grid>
               <Grid item xs={5} sm={5} md={5}>
                 <Button

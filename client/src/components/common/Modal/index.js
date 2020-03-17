@@ -64,12 +64,13 @@ export default function SimpleModal(props) {
         aria-describedby="simple-modal-description"
         open={open}
         onClose={handleClose}
+        onSubmit={handleClose}
       >
         <div style={modalStyle} className={classes.paper} id="modal-container">
           <h2 id="simple-modal-title">{modalTitle}</h2>
-          <p id="simple-modal-description">
+          <div id="simple-modal-description">
           {modalContent}
-            </p>
+            </div>
         </div>
       </Modal>
     </div>
