@@ -30,6 +30,7 @@ const TextFieldLabel = props.constTextFieldLabel
           rows="10"
           //defaultValue="Default Value"
           variant="outlined"
+          onChange={e => props.setFeed(e.target.value)}
         />
 </div>
     </form>

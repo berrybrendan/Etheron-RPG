@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import CssBaseline from '@material-ui/core/CssBaseline';
-import Link from '@material-ui/core/Link';
+// import Link from '@material-ui/core/Link';
 // import Paper from '@material-ui/core/Paper';
 // import Box from '@material-ui/core/Box';
 import Container from '@material-ui/core/Container'
@@ -20,20 +20,20 @@ import API from '../utils/API'
 // const userDB = require('../../../server/controllers/usersController')
 // const characterDB = require('../../../server/controllers/charactersController')
 
-function Copyright() {
-  return (
-    <ThemeProvider theme={theme}>
-      <Typography variant="body2" color="textSecondary" align="center">
-        {'Copyright © '}
-        <Link color="inherit" href="http://etheron-rpg.herokuapp.com/">
-          Etheron RPG
-        </Link>{' '}
-        {new Date().getFullYear()}
-        {'.'}
-      </Typography>
-    </ThemeProvider>
-  );
-}
+// function Copyright() {
+//   return (
+//     <ThemeProvider theme={theme}>
+//       <Typography variant="body2" color="textSecondary" align="center">
+//         {'Copyright © '}
+//         <Link color="inherit" href="http://etheron-rpg.herokuapp.com/">
+//           Etheron RPG
+//         </Link>{' '}
+//         {new Date().getFullYear()}
+//         {'.'}
+//       </Typography>
+//     </ThemeProvider>
+//   );
+// }
 
 const useStyles = makeStyles(theme => ({
   root: {

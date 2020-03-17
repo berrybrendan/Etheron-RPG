@@ -6,15 +6,15 @@ module.exports = {
     console.log('here')
     console.log(req.params)
     db.User
-    .findById(req.params.id)
-    .populate("characters")
-    .sort({date: 1})
-    .then(dbUser => {
-      res.json(dbUser)
-    })
-    .catch(err => {
-      res.json(err);
-    });   
+      .findById(req.params.id)
+      .populate("characters")
+      .sort({ date: 1 })
+      .then(dbUser => {
+        res.json(dbUser)
+      })
+      .catch(err => {
+        res.json(err);
+      });
 
     // db.Character
     //   .find(req.query)
@@ -31,14 +31,14 @@ module.exports = {
   create: function (req, res) {
     db.Character
       .create(req.body)
-      .then(({ _id }) => db.User.findOneAndUpdate({_id: req.body.user}, { $push: { characters: _id } }, { new: true }))
+      .then(({ _id }) => db.User.findOneAndUpdate({ _id: req.body.user }, { $push: { characters: _id } }, { new: true }))
       .then(dbUser => {
         res.json(dbUser);
       })
       .catch(err => {
         res.json(err);
       });
-      
+
   },
   update: function (req, res) {
     db.Character
@@ -48,7 +48,7 @@ module.exports = {
   },
   remove: function (req, res) {
     db.Character
-      .findById(req.params.id )
+      .findById(req.params.id)
       .then(dbModel => dbModel.remove())
       .then(dbModel => res.json(dbModel))
       .catch(err => res.status(422).json(err));
