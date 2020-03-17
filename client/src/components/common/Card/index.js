@@ -35,7 +35,7 @@ export default function SimpleCard(props) {
     <Card className={classes.root}>
       <CardContent>
         <Typography variant={props.h ? props.h :"h2"} component="h2">
-         {cardTitle}
+        {cardTitle}
         </Typography>
         <Typography className={classes.pos} color="textSecondary">
           {cardHeader}
