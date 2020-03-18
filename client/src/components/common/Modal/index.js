@@ -1,8 +1,8 @@
 import React from 'react';
 import Modal from '@material-ui/core/Modal';
 import { makeStyles, ThemeProvider } from '@material-ui/core/styles'
-import './index.css';
 
+import './index.css';
 import theme from '../../../utils/themeUtil'
 import Button from '../Button'
 

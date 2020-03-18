@@ -1,7 +1,10 @@
 import React, { Component } from "react";
+import TextField from '@material-ui/core/TextField';
 
+// import FormText from "../common/FormText"
 import Button from "../common/Button";
 import API from "../../utils/API";
+import './index.css'
 
 class CreateChar extends Component {
   constructor(props) {
@@ -11,7 +14,6 @@ class CreateChar extends Component {
       name: "",
       type: "",
       silver: 0,
-      user: props.id,
       stats: {
         level: 1,
         maxhealth: 30,
@@ -20,7 +22,8 @@ class CreateChar extends Component {
         int: this.randomizeStats(),
         speed: this.randomizeStats(),
         defense: this.randomizeStats()
-      }
+      },
+      user: props.id
     };
   }
 
@@ -45,22 +48,24 @@ class CreateChar extends Component {
       <div>
         <form onSubmit={this.submitHandler}>
           <div>
-            <input
+            <TextField
               type="text"
               name="name"
+              label="Character Name"
               value={name}
               onChange={this.changeHandler}
             />
           </div>
           <div>
-            <input
+            <TextField
               type="text"
               name="type"
+              label="Class"
               value={type}
               onChange={this.changeHandler}
             />
           </div>
-          <Button type="submit" fullWidth variant="contained" color="secondary">
+          <Button type="submit" fullWidth variant="contained" color="secondary" id='charSubmit'>
             Submit
           </Button>
         </form>

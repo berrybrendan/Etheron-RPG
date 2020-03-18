@@ -180,9 +180,8 @@ function Dashboard(props) {
                 fullWidth
                 variant="contained"
                 color="secondary"
-                id={userId}
                 modalTitle={'Create a new adventurer'}
-                modalContent={<CreateChar></CreateChar>}>
+                modalContent={<CreateChar id={userId}></CreateChar>}>
                 </SimpleModal>
                 {/* <Button
                   fullWidth
