@@ -116,30 +116,30 @@ function Dashboard(props) {
       })
   }
 
-  const createCharacter = () => {
-    console.log('clicked')
-    const wCharacter = {
-      name: "Rowdy Alvin",
-      type: "Wizard",
-      silver: 78,
-      stats: {
-        level: 7,
-        maxhealth: 30,
-        currenthealth: 27,
-        strength: 14,
-        intel: 17,
-        speed: 12,
-        defense: 9
-      },
-      user: userId
-    }
-    console.log(wCharacter)
-    API.createCharacter(wCharacter)
-      .then(res => {
-        console.log("success")
-        history.push('/')
-      })
-  }
+  // const createCharacter = () => {
+  //   console.log('clicked')
+  //   const wCharacter = {
+  //     name: "Rowdy Alvin",
+  //     type: "Wizard",
+  //     silver: 78,
+  //     stats: {
+  //       level: 7,
+  //       maxhealth: 30,
+  //       currenthealth: 27,
+  //       strength: 14,
+  //       intel: 17,
+  //       speed: 12,
+  //       defense: 9
+  //     },
+  //     user: userId
+  //   }
+  //   console.log(wCharacter)
+  //   API.createCharacter(wCharacter)
+  //     .then(res => {
+  //       console.log("success")
+  //       history.push('/')
+  //     })
+  // }
 
   const gameStart = (player) => {
     history.push("/etheron")
@@ -180,9 +180,8 @@ function Dashboard(props) {
                 fullWidth
                 variant="contained"
                 color="secondary"
-                id={userId}
                 modalTitle={'Create a new adventurer'}
-                modalContent={<CreateChar></CreateChar>}>
+                modalContent={<CreateChar id={userId}></CreateChar>}>
                 </SimpleModal>
                 {/* <Button
                   fullWidth
