@@ -33,13 +33,14 @@ Dependencies used include
 
 * react-unity-webgl - runs the unity game engine on the web browser
 
+
 ## Credits
 
 Developers on this project include:
 
 * Brendan Berry
 * Alvin Revilas
-* Bill 
+* Bill Murray
 * Carlos Rojas
 * Daniel Gil
 
